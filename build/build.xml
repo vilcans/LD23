@@ -24,15 +24,6 @@
     <!-- merge the pages properties -->
     <var name="page-files" value="${file.pages}, ${file.pages.default.include}"/>
 
-    <!-- Test for Ant Version Delete this task and all instances of overwrite='no' if you can't upgrade to 1.8.2-->
-    <fail message="All features of the build script require Ant version 1.8.2. Please upgrade to 1.8.2 or remove all instances of 'overwrite=no' (and this fail task) from the build script to continue">
-        <condition>
-            <not>
-                <contains string="${ant.version}" substring="1.8.2"/>
-            </not>
-        </condition>
-    </fail>
-
     <!--
     *************************************************
     * BASE TARGETS                                  *
@@ -498,7 +489,7 @@
   <target name="-js.main.concat" depends="-js.all.minify" description="(PRIVATE) Concatenates the JS files in dir.js">
       <echo message="Concatenating Main JS scripts..."/>
       <!-- overwrite=no here means not to overwrite if the target is newer than the sources -->
-      <concat destfile="./${dir.intermediate}/${dir.js}/scripts-concat.js" overwrite="no">
+      <concat destfile="./${dir.intermediate}/${dir.js}/scripts-concat.js" >
           <fileset dir="./${dir.intermediate}/">
               <include name="${dir.js}/plugins.js"/>
               <include name="${dir.js}/${file.root.script}"/>
@@ -508,7 +499,7 @@
 
   <target name="-js.mylibs.concat" depends="-js.all.minify" description="(PRIVATE) Concatenates the JS files in dir.js.mylibs">
       <echo message="Concatenating JS libraries"/>
-      <concat destfile="./${dir.intermediate}/${dir.js}/otherscripts-concat.js" overwrite="no">
+      <concat destfile="./${dir.intermediate}/${dir.js}/otherscripts-concat.js" >
         <fileset dir="./${dir.intermediate}/${dir.js}" excludes="${file.js.bypass}, ${slug.libs}/*">
           <exclude name="${file.root.script}"/>
           <exclude name="plugins.js"/>
@@ -522,7 +513,7 @@
   <target name="-js.scripts.concat" depends="-js.main.concat,-js.mylibs.concat" if="build.concat.scripts">
       <echo message="Concatenating library file with main script file"/>
       <!-- overwrite=no here means not to overwrite if the target is newer than the sources -->
-      <concat destfile="./${dir.intermediate}/${dir.js}/scripts-concat.min.js" overwrite="no">
+      <concat destfile="./${dir.intermediate}/${dir.js}/scripts-concat.min.js" >
         <fileset dir="./${dir.intermediate}/${dir.js}/">
               <include name="scripts-concat.js"/>
               <include name="otherscripts-concat.js"/>
@@ -539,7 +530,7 @@
       <if>
           <available file="./${dir.intermediate}/${dir.js.modules}"/>
           <then>
-      <concat destfile="./${dir.intermediate}/${dir.js.modules}/_all.js" overwrite="no">
+      <concat destfile="./${dir.intermediate}/${dir.js.modules}/_all.js" >
         <fileset dir="./${dir.intermediate}/${dir.js.modules}/">
           <include name="*.js"/>
         </fileset>
