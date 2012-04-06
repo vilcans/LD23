@@ -58,4 +58,5 @@ class Game
     @mouseX = x
     @mouseY = y
 
-new Game(document.body)
+$(document).ready ->
+  new Game(document.body)
