@@ -1,6 +1,8 @@
 
 class Game
   constructor: (parentElement) ->
+    @parentElement = $(parentElement)
+
     @renderer = new THREE.WebGLRenderer()
     @renderer.setSize 800, 640
     parentElement.appendChild @renderer.domElement
@@ -27,6 +29,29 @@ class Game
     @light.position.set(10, 0, 10)
     @scene.add @light
 
+    @parentElement
+      .mousedown(@onMouseDown)
+      .mouseup(@onMouseUp)
+
+  onMouseDown: (event) =>
+    @mouseX = event.clientX
+    @mouseY = event.clientY
+
+    @parentElement.mousemove @onMouseDrag
+
+  onMouseUp: (event) =>
+    @parentElement.off 'mousemove', @onMouseDrag
+
+  onMouseDrag: (event) =>
+    x = event.clientX
+    y = event.clientY
+    dx = x - @mouseX
+    dy = y - @mouseY
+    @camera.translateX dx * -.01
+    @camera.translateY dy * .01
+    @camera.updateMatrix()
+    @mouseX = x
+    @mouseY = y
     @renderer.render @scene, @camera
 
 new Game(document.body)
