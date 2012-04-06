@@ -33,6 +33,11 @@ class Game
       .mousedown(@onMouseDown)
       .mouseup(@onMouseUp)
 
+    window.setInterval @animate, 1000 / 60
+
+  animate: =>
+    @renderer.render @scene, @camera
+
   onMouseDown: (event) =>
     @mouseX = event.clientX
     @mouseY = event.clientY
@@ -52,6 +57,5 @@ class Game
     @camera.updateMatrix()
     @mouseX = x
     @mouseY = y
-    @renderer.render @scene, @camera
 
 new Game(document.body)
