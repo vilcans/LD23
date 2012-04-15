@@ -1,2 +1,5 @@
-publish
-intermediate
+env
+*.pyc
+www/intermediate
+www/publish
+
