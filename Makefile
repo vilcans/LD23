@@ -1,5 +1,12 @@
 all: release
 
+COFFEE_SOURCES = $(wildcard src/*.coffee)
+GENERATED_JS = $(patsubst src/%.coffee,www/js/%.js,$(COFFEE_SOURCES))
+
+clean:
+	rm -vrf www/intermediate www/publish
+	rm -vf ${GENERATED_JS}
+
 js:
 	coffee -c -o www/js/ src/
 
