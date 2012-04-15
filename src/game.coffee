@@ -1,5 +1,5 @@
 
-class Game
+class window.Game
   constructor: (parentElement) ->
     @parentElement = $(parentElement)
 
@@ -71,6 +71,3 @@ class Game
     @camera.updateMatrix()
     @mouseX = x
     @mouseY = y
-
-$(document).ready ->
-  new Game(document.body)

@@ -1,12 +1,12 @@
 all: release
 
 js:
-	coffee -c -o www/js/modules src/
+	coffee -c -o www/js/ src/
 
 continuous:
-	coffee -w -c -o www/js/modules src/
+	coffee -w -c -o www/js/ src/
 
 release: js
-	ant -f build/build.xml
+	ant -f www/build/build.xml
 
 .PHONY: continuous js
