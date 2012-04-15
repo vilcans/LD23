@@ -19,13 +19,27 @@ class Game
     @camera.lookAt @scene.position
     @scene.add @camera
 
-    @cube = new THREE.Mesh(
-      new THREE.CubeGeometry(5, 5, 5),
-      new THREE.MeshLambertMaterial {color: 0xFF0000}
-    )
-    @scene.add @cube
+    # @cube = new THREE.Mesh(
+    #   new THREE.CubeGeometry(5, 5, 5),
+    #   new THREE.MeshLambertMaterial {color: 0xFF0000}
+    # )
+    # @scene.add @cube
 
-    @light = new THREE.PointLight 0xFFFF00
+    loader = new THREE.JSONLoader()
+    console.log 'loading object'
+    loader.load(
+      'assets/box.js',
+      (geometry) =>
+        console.log 'got geo', geometry
+        geometry.materials[0].shading = THREE.FlatShading
+        material = new THREE.MeshFaceMaterial()
+        mesh = new THREE.Mesh geometry, material
+        #mesh2.position.x = - 400;
+        #mesh2.scale.x = mesh2.scale.y = mesh2.scale.z = 250;
+        @scene.add mesh
+    )
+
+    @light = new THREE.PointLight 0xFFFFFF
     @light.position.set(10, 0, 10)
     @scene.add @light
 
