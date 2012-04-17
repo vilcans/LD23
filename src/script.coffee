@@ -1,7 +1,7 @@
 $(document).ready ->
   if not Detector.webgl
-    _gaq.push ['_trackEvent', 'webgl', 'nodetect', null, null, true]
+    Tracking.trackEvent 'webgl', 'nodetect', nonInteraction: true
     Detector.addGetWebGLMessage()
   else
-    _gaq.push ['_trackEvent', 'webgl', 'available', null, null, true]
+    Tracking.trackEvent 'webgl', 'available', nonInteraction: true
     new Game(document.body)
