@@ -4,4 +4,11 @@ $(document).ready ->
     Detector.addGetWebGLMessage()
   else
     Tracking.trackEvent 'webgl', 'available', nonInteraction: true
-    new Game(document.body)
+    game = new Game(document.body)
+    game.loadAssets()
+    window.setTimeout(
+      ->
+        game.createScene()
+        game.start()
+      1000
+    )
