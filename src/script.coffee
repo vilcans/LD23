@@ -7,5 +7,6 @@ $(document).ready ->
     game = new Game(document.body)
     game.loadAssets ->
       console.log 'assets loaded!'
+      $('.loading').hide()
       game.createScene()
       game.start()
