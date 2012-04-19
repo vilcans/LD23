@@ -5,10 +5,7 @@ $(document).ready ->
   else
     Tracking.trackEvent 'webgl', 'available', nonInteraction: true
     game = new Game(document.body)
-    game.loadAssets()
-    window.setTimeout(
-      ->
-        game.createScene()
-        game.start()
-      1000
-    )
+    game.loadAssets ->
+      console.log 'assets loaded!'
+      game.createScene()
+      game.start()

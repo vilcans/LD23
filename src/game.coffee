@@ -6,8 +6,10 @@ class window.Game
     @renderer.setSize 800, 640
 
   loadAssets: (onFinished) ->
+    callbacks = new Callbacks(onFinished)
     @texture = THREE.ImageUtils.loadTexture('assets/dummy.png', {},
-      onFinished)
+      callbacks.add ->
+    )
 
     @material = new THREE.ShaderMaterial(
       vertexShader: """
@@ -35,7 +37,7 @@ class window.Game
     loader = new THREE.JSONLoader()
     loader.load(
       'assets/box.js',
-      (geometry) =>
+      callbacks.add (geometry) =>
         #console.log 'got geo', geometry
         #geometry.materials[0].shading = THREE.FlatShading
         #material = new THREE.MeshFaceMaterial()
