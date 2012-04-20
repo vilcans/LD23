@@ -3,7 +3,7 @@ class window.Graphics
   constructor: (parentElement) ->
     @parentElement = parentElement
     @renderer = new THREE.WebGLRenderer()
-    @renderer.setSize 800, 640
+    @renderer.setSize parentElement.clientWidth, parentElement.clientHeight
 
     @stats = new Stats()
 

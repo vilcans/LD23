@@ -74,10 +74,26 @@ td { vertical-align: top; }
    Author:
    ========================================================================== */
 
-.loading {
-  font-size: 2em;
+body {
+  background: black;
+  color: white;
 }
 
+.loading {
+  font-size: 60px;
+  top: 100px;
+  text-align: center;
+  text-shadow: 0px 0px 15px #f20;
+}
+
+#game {
+  width: 800px;
+  height: 640px;
+  border: 1px solid red;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+}
 
 
 

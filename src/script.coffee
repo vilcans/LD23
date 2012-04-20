@@ -4,7 +4,8 @@ $(document).ready ->
     Detector.addGetWebGLMessage()
   else
     Tracking.trackEvent 'webgl', 'available', nonInteraction: true
-    game = new Game {parentElement: document.body}
+    element = document.getElementById('game')
+    game = new Game {parentElement: element}
     game.init ->
       console.log 'Game initialized!'
       $('.loading').hide()
