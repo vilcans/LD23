@@ -5,6 +5,8 @@ class window.Graphics
     @renderer = new THREE.WebGLRenderer()
     @renderer.setSize 800, 640
 
+    @stats = new Stats()
+
   loadAssets: (onFinished) ->
     callbacks = new Callbacks(onFinished)
     @texture = THREE.ImageUtils.loadTexture('assets/dummy.png', {},
@@ -77,5 +79,11 @@ class window.Graphics
   start: ->
     @parentElement.appendChild @renderer.domElement
 
+    @stats.domElement.style.position = 'absolute';
+    @stats.domElement.style.top = '0px';
+    @stats.domElement.style.left = '0px';
+    @parentElement.appendChild @stats.domElement
+
   render: ->
     @renderer.render @scene, @camera
+    @stats.update()
