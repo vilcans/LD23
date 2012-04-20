@@ -4,9 +4,8 @@ $(document).ready ->
     Detector.addGetWebGLMessage()
   else
     Tracking.trackEvent 'webgl', 'available', nonInteraction: true
-    game = new Game(document.body)
-    game.loadAssets ->
-      console.log 'assets loaded!'
+    game = new Game {parentElement: document.body}
+    game.init ->
+      console.log 'Game initialized!'
       $('.loading').hide()
-      game.createScene()
       game.start()

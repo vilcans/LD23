@@ -1,7 +1,7 @@
 
-class window.Game
+class window.Graphics
   constructor: (parentElement) ->
-    @parentElement = $(parentElement)
+    @parentElement = parentElement
     @renderer = new THREE.WebGLRenderer()
     @renderer.setSize 800, 640
 
@@ -75,34 +75,7 @@ class window.Game
     @scene.add @object
 
   start: ->
-    @parentElement.append @renderer.domElement
+    @parentElement.appendChild @renderer.domElement
 
-    @parentElement
-      .mousedown(@onMouseDown)
-      .mouseup(@onMouseUp)
-
-    window.setInterval @animate, 1000 / 60
-
-  animate: =>
-    @cube.translateX .01
+  render: ->
     @renderer.render @scene, @camera
-
-  onMouseDown: (event) =>
-    @mouseX = event.clientX
-    @mouseY = event.clientY
-
-    @parentElement.mousemove @onMouseDrag
-
-  onMouseUp: (event) =>
-    @parentElement.off 'mousemove', @onMouseDrag
-
-  onMouseDrag: (event) =>
-    x = event.clientX
-    y = event.clientY
-    dx = x - @mouseX
-    dy = y - @mouseY
-    @camera.translateX dx * -.01
-    @camera.translateY dy * .01
-    @camera.updateMatrix()
-    @mouseX = x
-    @mouseY = y
