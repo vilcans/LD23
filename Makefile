@@ -16,4 +16,4 @@ continuous:
 release: js
 	ant -f www/build/build.xml
 
-.PHONY: continuous js
+.PHONY: clean js continuous release
