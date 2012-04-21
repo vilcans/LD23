@@ -8,7 +8,9 @@ class window.Ship
 
   animate: (deltaTime) ->
     cosLat = Math.cos(@latitude)
-    @longitude += @speed * Math.cos(@bearing) / cosLat * deltaTime
+    @longitude = wrapAngle(
+      @longitude + @speed * Math.cos(@bearing) / cosLat * deltaTime
+    )
 
     @latitude += @speed * Math.sin(@bearing) * deltaTime
     if @latitude >= Math.PI / 2

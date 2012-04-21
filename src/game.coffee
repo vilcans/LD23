@@ -96,9 +96,9 @@ class window.Game
   onKeypress: (event) =>
     console.log 'keypress', event
     if event.charCode == 65 or event.charCode == 97
-      @selectedShip.bearing += Math.PI * 2 / 36
+      @selectedShip.bearing = wrapAngle(@selectedShip.bearing + Math.PI * 2 / 36)
     else if event.charCode == 68 or event.charCode == 100
-      @selectedShip.bearing -= Math.PI * 2 / 36
+      @selectedShip.bearing = wrapAngle(selectedShip.bearing + Math.PI * 2 / 36)
     else if event.charCode == 87 or event.charCode == 119
       @selectedShip.speed += .1
     else if event.charCode == 83 or event.charCode == 115
@@ -128,7 +128,7 @@ class window.Game
     dy = y - @mouseY
 
     dLat = -dx / @graphics.dimensions.x * 3
-    @cameraLongitude += dLat
+    @cameraLongitude = wrapAngle(@cameraLongitude + dLat)
     @cameraRotationSpeed = dLat / FRAME_LENGTH
 
     @mouseX = x
