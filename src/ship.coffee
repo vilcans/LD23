@@ -7,10 +7,17 @@ class window.Ship
     @bearing = 0  # radians, where 0 is east
 
   animate: (deltaTime) ->
-    @longitude += @speed * Math.cos(@bearing) / Math.cos(@latitude) * deltaTime
+    cosLat = Math.cos(@latitude)
+    if Math.abs(cosLat) >= .01
+        @longitude += @speed * Math.cos(@bearing) / cosLat * deltaTime
+
     @latitude += @speed * Math.sin(@bearing) * deltaTime
-    # if @latitude >= Math.PI / 2
-    #   @latitude -= Math.PI
+    if @latitude >= Math.PI / 2
+      @longitude -= Math.PI
+      @bearing += Math.PI / 2
+    else if @latitude <= -Math.PI / 2
+      @longitude -= Math.PI
+      @bearing -= Math.PI / 2
 
   updateMesh: ->
     @mesh.eulerOrder = 'YXZ'
