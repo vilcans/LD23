@@ -38,19 +38,6 @@ class window.Graphics
           texture: @texture
     )
 
-    #loader = new THREE.JSONLoader()
-    #loader.load(
-    #  'assets/box.js',
-    #  callbacks.add (geometry) =>
-    #    #console.log 'got geo', geometry
-    #    #geometry.materials[0].shading = THREE.FlatShading
-    #    #material = new THREE.MeshFaceMaterial()
-    #    @object = new THREE.Mesh geometry, @material
-    #    #mesh2.position.x = - 400;
-    #    #mesh2.scale.x = mesh2.scale.y = mesh2.scale.z = 250;
-    #    #@scene.add mesh
-    #)
-
   createScene: ->
     @scene = new THREE.Scene()
 

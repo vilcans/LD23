@@ -16,6 +16,22 @@ File->User Preferences->Addons
 Search for three, click the checkbox
 Use the regular Import and Export menu within Blender, select `Three.js (js)`.
 
+Loading a mesh:
+
+    loader = new THREE.JSONLoader()
+    loader.load(
+      'assets/box.js',
+      callbacks.add (geometry) =>
+        #console.log 'got geo', geometry
+        #geometry.materials[0].shading = THREE.FlatShading
+        #material = new THREE.MeshFaceMaterial()
+        @object = new THREE.Mesh geometry, @material
+        #mesh2.position.x = - 400;
+        #mesh2.scale.x = mesh2.scale.y = mesh2.scale.z = 250;
+        #@scene.add mesh
+    )
+
+
 ## Three.js
 
 There's a non-minified version of Three.js here:
