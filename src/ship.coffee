@@ -8,16 +8,15 @@ class window.Ship
 
   animate: (deltaTime) ->
     cosLat = Math.cos(@latitude)
-    if Math.abs(cosLat) >= .01
-        @longitude += @speed * Math.cos(@bearing) / cosLat * deltaTime
+    @longitude += @speed * Math.cos(@bearing) / cosLat * deltaTime
 
     @latitude += @speed * Math.sin(@bearing) * deltaTime
     if @latitude >= Math.PI / 2
       @longitude -= Math.PI
-      @bearing += Math.PI / 2
+      @bearing += Math.PI
     else if @latitude <= -Math.PI / 2
       @longitude -= Math.PI
-      @bearing -= Math.PI / 2
+      @bearing -= Math.PI
 
   updateMesh: ->
     @mesh.eulerOrder = 'YXZ'
