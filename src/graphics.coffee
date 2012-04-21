@@ -51,7 +51,6 @@ class window.Graphics
       .1,         # Near
       10000       # Far
     )
-    @camera.position.set(0, 0, 3.4)
     @camera.lookAt @scene.position
     @scene.add @camera
 

@@ -55,7 +55,7 @@ class window.Game
       if Math.abs(@cameraRotationSpeed) < .001
         @cameraRotationSpeed = 0
 
-    cameraAltitude = 3.0
+    cameraAltitude = 3.4
     @graphics.setCameraPosition(
       Math.sin(@cameraLongitude) * cameraAltitude,
       0,
