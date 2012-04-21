@@ -1,4 +1,8 @@
 
+Vector2 = THREE.Vector2
+Vector3 = THREE.Vector3
+ORIGIN = new Vector3(0, 0, 0)
+
 class window.Graphics
   constructor: (parentElement) ->
     @parentElement = parentElement
@@ -64,7 +68,7 @@ class window.Graphics
       #new THREE.MeshLambertMaterial {color: 0xFF0000}
       @material
     )
-    @planet.position.set(0, 0, 0)
+    @planet.position = ORIGIN
     @scene.add @planet
 
     #@scene.add @object
@@ -80,3 +84,10 @@ class window.Graphics
   render: ->
     @renderer.render @scene, @camera
     @stats.update()
+
+  setCameraPosition: (x, y, z) ->
+    @camera.position.x = x
+    @camera.position.y = y
+    @camera.position.z = z
+    @camera.lookAt ORIGIN
+    @camera.updateMatrix()
