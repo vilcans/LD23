@@ -10,6 +10,7 @@ class window.Game
     @graphics = new Graphics(parentElement)
 
     @cameraLongitude = 0  # radians
+    @cameraLatitude = 0  # radians
     @cameraRotationSpeed = 0  # radians per second
 
     @ships = []
@@ -78,23 +79,21 @@ class window.Game
     deltaTime = FRAME_LENGTH
     if @selectedShip
       @cameraLongitude = @selectedShip.longitude
-    else if not @dragging
-      @cameraLongitude += @cameraRotationSpeed * deltaTime
-      @cameraRotationSpeed *= Math.pow(.1, deltaTime)
-      if Math.abs(@cameraRotationSpeed) < .01
-        @cameraRotationSpeed = 0
+      @cameraLatitude = @selectedShip.latitude
+    else
+      @cameraLatitude = 0
+      if not @dragging
+        @cameraLongitude += @cameraRotationSpeed * deltaTime
+        @cameraRotationSpeed *= Math.pow(.1, deltaTime)
+        if Math.abs(@cameraRotationSpeed) < .01
+          @cameraRotationSpeed = 0
 
     document.getElementById('camera-longitude').innerHTML = toDegrees(@cameraLongitude) + '\u00b0'
     for ship in @ships
       ship.animate(deltaTime)
       ship.updateMesh()
 
-    cameraAltitude = 3.4
-    @graphics.setCameraPosition(
-      Math.sin(@cameraLongitude) * cameraAltitude,
-      0,
-      Math.cos(@cameraLongitude) * cameraAltitude
-    )
+    @graphics.setCamera @cameraLatitude, @cameraLongitude, 2.4
     @graphics.render()
 
   onKeypress: (event) =>

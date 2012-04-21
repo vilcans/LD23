@@ -95,9 +95,13 @@ class window.Graphics
     @renderer.render @scene, @camera
     @stats.update()
 
-  setCameraPosition: (x, y, z) ->
-    @camera.position.x = x
-    @camera.position.y = y
-    @camera.position.z = z
-    @camera.lookAt ORIGIN
-    @camera.updateMatrix()
+  setCamera: (latitude, longitude, altitude) ->
+    rotationY = new Matrix4().setRotationY(longitude)
+    rotationX = new Matrix4().setRotationX(-latitude)
+    translation = new Matrix4().setTranslation(0, 0, altitude + 1)
+
+    matrix = new Matrix4().multiply(rotationY, rotationX).multiplySelf(translation)
+
+    # Funny, Object3D doesn't have a way to just SET the matrix(?)
+    @camera.matrix.identity()
+    @camera.applyMatrix(matrix)
