@@ -102,12 +102,12 @@ class window.Game
       @selectedShip.bearing += Math.PI * 2 / 36
     else if event.charCode == 68 or event.charCode == 100
       @selectedShip.bearing -= Math.PI * 2 / 36
-    else if event.charCode == 87 or event.charCode = 119
+    else if event.charCode == 87 or event.charCode == 119
       @selectedShip.speed += .1
-    else if event.charCode == 83 or event.charCode = 115
+    else if event.charCode == 83 or event.charCode == 115
       @selectedShip.speed -= .1
 
-    console.log 'bearing', @selectedShip.bearing
+    console.log 'bearing', @selectedShip.bearing, 'speed', @selectedShip.speed
 
   onMouseDown: (event) =>
     @dragging = true
