@@ -1,10 +1,13 @@
+FPS = 60
+FRAME_LENGTH = 1 / FPS
+
 class window.Game
   constructor: ({parentElement}) ->
     @parentElement = parentElement
     @graphics = new Graphics(parentElement)
 
     @cameraLongitude = 0  # radians
-    @cameraRotationSpeed = Math.PI * 2 / 2  # radians per second
+    @cameraRotationSpeed = 0  # radians per second
 
   init: (onFinished) ->
     @graphics.loadAssets(onFinished)
@@ -28,7 +31,7 @@ class window.Game
       console.log 'animation already started!'
     else
       console.log 'starting animation'
-      @timer = window.setInterval @animate, 1000 / 60
+      @timer = window.setInterval @animate, FRAME_LENGTH * 1000
 
   stopAnimation: ->
     if not @timer
@@ -45,9 +48,13 @@ class window.Game
       @startAnimation()
 
   animate: =>
-    deltaTime = 1 / 60
-    @cameraLongitude += @cameraRotationSpeed * deltaTime
-    console.log 'camera longitude', @cameraLongitude
+    deltaTime = FRAME_LENGTH
+    if not @dragging
+      @cameraLongitude += @cameraRotationSpeed * deltaTime
+      @cameraRotationSpeed *= Math.pow(.1, deltaTime)
+      if Math.abs(@cameraRotationSpeed) < .001
+        @cameraRotationSpeed = 0
+
     cameraAltitude = 3.0
     @graphics.setCameraPosition(
       Math.sin(@cameraLongitude) * cameraAltitude,
@@ -57,21 +64,29 @@ class window.Game
     @graphics.render()
 
   onMouseDown: (event) =>
+    @dragging = true
     @mouseX = event.clientX
     @mouseY = event.clientY
 
+    @cameraRotationSpeed = 0
     $(@parentElement).mousemove @onMouseDrag
 
   onMouseUp: (event) =>
+    @dragging = false
     $(@parentElement).off 'mousemove', @onMouseDrag
 
   onMouseDrag: (event) =>
+    if not @dragging
+      return
+
     x = event.clientX
     y = event.clientY
     dx = x - @mouseX
     dy = y - @mouseY
-    @graphics.camera.translateX dx * -.01
-    @graphics.camera.translateY dy * .01
-    @graphics.camera.updateMatrix()
+
+    dLat = -dx / @graphics.dimensions.x * 3
+    @cameraLongitude += dLat
+    @cameraRotationSpeed = dLat / FRAME_LENGTH
+
     @mouseX = x
     @mouseY = y
