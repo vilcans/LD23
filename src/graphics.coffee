@@ -85,8 +85,11 @@ class window.Graphics
     return mesh
 
   addPort: ->
-    radius = .06
-    mesh = new THREE.CylinderGeometry(radius * .67, radius, 0, 24, 1, true)
+    mesh = new THREE.CylinderGeometry(
+      PORT_RADIUS * .67, PORT_RADIUS,
+      0, 12,  # height, segments
+      1, true
+    )
     # Move to planet's surface
     mesh.applyMatrix(new Matrix4().setRotationX(Math.PI / 2))
     mesh.applyMatrix(new Matrix4().setTranslation(0, 0, 1))

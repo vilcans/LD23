@@ -73,7 +73,7 @@ class window.Game
 
   addPort: (name, latitude, longitude) ->
     mesh = @graphics.addPort()
-    port = new Port(mesh, latitude, longitude)
+    port = new Port(mesh, latitude, longitude, name)
     @ports.push port
     return port
 
@@ -85,6 +85,9 @@ class window.Game
 
   animate: =>
     deltaTime = FRAME_LENGTH
+
+    @animateShips(deltaTime)
+
     if @selectedShip
       @cameraLongitude = @selectedShip.longitude
       @cameraLatitude = @selectedShip.latitude
@@ -97,12 +100,20 @@ class window.Game
           @cameraRotationSpeed = 0
 
     document.getElementById('camera-longitude').innerHTML = toDegrees(@cameraLongitude) + '\u00b0'
-    for ship in @ships
-      ship.animate(deltaTime)
-      ship.updateMesh()
 
     @graphics.setCamera @cameraLatitude, @cameraLongitude, 2.4
     @graphics.render()
+
+  animateShips: (deltaTime) ->
+    for ship in @ships
+      ship.animate(deltaTime)
+      ship.updateMesh()
+      for port in @ports
+        d2 = distanceSquared(
+          ship.latitude, ship.longitude,
+          port.latitude, port.longitude)
+        if d2 <= PORT_RADIUS_SQUARED
+          console.log "ship at port #{port.name}"
 
   onKeypress: (event) =>
     console.log 'keypress', event

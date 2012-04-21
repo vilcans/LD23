@@ -6,5 +6,6 @@ ship.js
 port.js
 tracking.js
 async.js
+constants.js
 math-globals.js
 *-spec.js
