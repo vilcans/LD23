@@ -1,10 +1,9 @@
 # Makes an angle be in the interval -PI <= x < PI
 window.wrapAngle = (radians) ->
-  while radians >= Math.PI
-    radians -= 2 * Math.PI
-
-  while radians < -Math.PI
-    radians += 2 * Math.PI
+  if radians >= Math.PI
+    return (radians + Math.PI) % (2 * Math.PI) - Math.PI
+  else if radians < -Math.PI
+    return -((-radians + Math.PI) % (2 * Math.PI) - Math.PI)
 
   return radians
 
