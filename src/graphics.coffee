@@ -44,6 +44,7 @@ class window.Graphics
     )
 
     @shipMaterial = new THREE.MeshLambertMaterial {color: 0xffffff}
+    @portMaterial = new THREE.MeshBasicMaterial {color: 0xff8833}
 
   createScene: ->
     @scene = new THREE.Scene()
@@ -80,6 +81,16 @@ class window.Graphics
     # Move to planet's surface
     mesh.applyMatrix(new Matrix4().setTranslation(0, 0, 1))
     mesh = new THREE.Mesh(mesh, @shipMaterial)
+    @scene.add mesh
+    return mesh
+
+  addPort: ->
+    radius = .06
+    mesh = new THREE.CylinderGeometry(radius * .67, radius, 0, 24, 1, true)
+    # Move to planet's surface
+    mesh.applyMatrix(new Matrix4().setRotationX(Math.PI / 2))
+    mesh.applyMatrix(new Matrix4().setTranslation(0, 0, 1))
+    mesh = new THREE.Mesh(mesh, @portMaterial)
     @scene.add mesh
     return mesh
 

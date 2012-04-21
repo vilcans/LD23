@@ -3,6 +3,7 @@ game.js
 graphics.js
 script.js
 ship.js
+port.js
 tracking.js
 async.js
 math-globals.js

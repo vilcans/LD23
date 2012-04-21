@@ -12,6 +12,7 @@ class window.Game
     @cameraRotationSpeed = 0  # radians per second
 
     @ships = []
+    @ports = []
 
   init: (onFinished) ->
     @graphics.loadAssets(onFinished)
@@ -29,10 +30,13 @@ class window.Game
     @addShip(toRadians(40.329444), toRadians(0))
     @addShip(toRadians(30.329444), toRadians(0))
 
-    for lat in [-9..9]
+    for lat in [-8..8]
       @addShip(toRadians(lat * 10), 0)
 
     @selectedShip = @addShip(0, 0)
+
+    @addPort('Stockholm', toRadians(59.329444), toRadians(18.068611))
+    @addPort('Atlantic', 0, 0)
 
     $(@eventsElement)
       .mousedown(@onMouseDown)
@@ -66,6 +70,12 @@ class window.Game
     ship = new Ship(mesh, latitude, longitude)
     @ships.push ship
     return ship
+
+  addPort: (name, latitude, longitude) ->
+    mesh = @graphics.addPort()
+    port = new Port(mesh, latitude, longitude)
+    @ports.push port
+    return port
 
   handleVisibilityChange: (e) =>
     if document.mozVisibilityState != 'visible'
