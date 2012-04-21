@@ -43,8 +43,23 @@ class window.Graphics
           texture: @texture
     )
 
-    @shipMaterial = new THREE.MeshLambertMaterial {color: 0xffffff}
+    @shipMaterial = new THREE.MeshLambertMaterial {
+      color: 0xffffff
+      ambient: 0x333333
+      shading: THREE.FlatShading
+    }
     @portMaterial = new THREE.MeshBasicMaterial {color: 0xff8833}
+
+    loader = new THREE.JSONLoader()
+    loader.load(
+      'assets/ship.js',
+      callbacks.add (geometry) =>
+        scale = .05
+        geometry.applyMatrix(new Matrix4().setScale(scale, scale, scale))
+        # Move to planet's surface
+        geometry.applyMatrix(new Matrix4().setTranslation(0, 0, 1))
+        @shipGeometry = geometry
+    )
 
   createScene: ->
     @scene = new THREE.Scene()
@@ -77,10 +92,7 @@ class window.Graphics
     @scene.add @planet
 
   addShip: ->
-    mesh = new THREE.CubeGeometry(.1, .05, .15)
-    # Move to planet's surface
-    mesh.applyMatrix(new Matrix4().setTranslation(0, 0, 1))
-    mesh = new THREE.Mesh(mesh, @shipMaterial)
+    mesh = new THREE.Mesh @shipGeometry, @shipMaterial
     @scene.add mesh
     return mesh
 
