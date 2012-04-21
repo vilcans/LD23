@@ -13,6 +13,7 @@ class window.Ship
     #   @latitude -= Math.PI
 
   updateMesh: ->
-    @mesh.eulerOrder = 'ZYX'
+    @mesh.eulerOrder = 'YXZ'
     @mesh.rotation.x = -@latitude
     @mesh.rotation.y = @longitude
+    @mesh.rotation.z = @bearing

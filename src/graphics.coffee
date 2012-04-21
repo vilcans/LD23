@@ -43,6 +43,8 @@ class window.Graphics
           texture: @texture
     )
 
+    @shipMaterial = new THREE.MeshLambertMaterial {color: 0xffffff}
+
   createScene: ->
     @scene = new THREE.Scene()
 
@@ -74,12 +76,10 @@ class window.Graphics
     @scene.add @planet
 
   addShip: ->
-    mesh = new THREE.SphereGeometry(.03, 6, 3)
+    mesh = new THREE.CubeGeometry(.1, .05, .15)
+    # Move to planet's surface
     mesh.applyMatrix(new Matrix4().setTranslation(0, 0, 1))
-    mesh = new THREE.Mesh(
-      mesh,
-      new THREE.MeshLambertMaterial {color: 0xffffff}
-    )
+    mesh = new THREE.Mesh(mesh, @shipMaterial)
     @scene.add mesh
     return mesh
 
