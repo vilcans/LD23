@@ -33,6 +33,8 @@ class window.Game
     for lat in [-9..9]
       @addShip(toRadians(lat * 10), 0)
 
+    @selectedShip = @addShip(0, 0)
+
     $(@parentElement)
       .mousedown(@onMouseDown)
       .mouseup(@onMouseUp)
@@ -42,6 +44,8 @@ class window.Game
       console.log 'Not starting animation because game not visible'
     else
       @startAnimation()
+
+    document.addEventListener 'keypress', @onKeypress
 
   startAnimation: ->
     if @timer
@@ -90,6 +94,14 @@ class window.Game
       Math.cos(@cameraLongitude) * cameraAltitude
     )
     @graphics.render()
+
+  onKeypress: (event) =>
+    console.log 'keypress', event
+    if event.keyCode == 37
+      @selectedShip.bearing += Math.PI * 2 / 36
+    else if event.keyCode == 39
+      @selectedShip.bearing -= Math.PI * 2 / 36
+    console.log 'bearing', @selectedShip.bearing
 
   onMouseDown: (event) =>
     @dragging = true
