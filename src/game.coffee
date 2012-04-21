@@ -76,7 +76,9 @@ class window.Game
 
   animate: =>
     deltaTime = FRAME_LENGTH
-    if not @dragging
+    if @selectedShip
+      @cameraLongitude = @selectedShip.longitude
+    else if not @dragging
       @cameraLongitude += @cameraRotationSpeed * deltaTime
       @cameraRotationSpeed *= Math.pow(.1, deltaTime)
       if Math.abs(@cameraRotationSpeed) < .01
