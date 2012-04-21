@@ -25,3 +25,6 @@ class window.Ship
     @mesh.rotation.x = -@latitude
     @mesh.rotation.y = @longitude
     @mesh.rotation.z = @bearing
+
+  brakeAtPort: (deltaTime) ->
+    @speed *= Math.pow(RETARDATION_AT_PORT, deltaTime)

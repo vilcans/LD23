@@ -23,20 +23,11 @@ class window.Game
 
     @selectedShip = @addShip(0, 0)
 
-    @addShip(toRadians(59.329444), toRadians(18.068611))
-    @addShip(toRadians(50.329444), toRadians(18.068611))
-    @addShip(toRadians(40.329444), toRadians(18.068611))
-    @addShip(toRadians(40.329444), toRadians(8.068611))
-    @addShip(toRadians(30.329444), toRadians(8.068611))
-
-    @addShip(toRadians(40.329444), toRadians(0))
-    @addShip(toRadians(30.329444), toRadians(0))
-
-    for lat in [-8..8]
-      @addShip(toRadians(lat * 10), 0)
+    #@addDummyShips()
 
     @addPort('Stockholm', toRadians(59.329444), toRadians(18.068611))
     @addPort('Atlantic', 0, 0)
+    @addPort('New York', toRadians(40.664167), toRadians(-73.938611))
 
     @ships[0].cargo = new Cargo destination: @ports[0]
 
@@ -90,6 +81,8 @@ class window.Game
 
     @animateShips(deltaTime)
 
+    @createNewPickup()  # must be called after animateShips
+
     if @selectedShip
       @cameraLongitude = @selectedShip.longitude
       @cameraLatitude = @selectedShip.latitude
@@ -101,37 +94,93 @@ class window.Game
         if Math.abs(@cameraRotationSpeed) < .01
           @cameraRotationSpeed = 0
 
-    document.getElementById('camera-longitude').innerHTML = toDegrees(@cameraLongitude) + '\u00b0'
-
     @graphics.setCamera @cameraLatitude, @cameraLongitude, 2.4
     @graphics.render()
 
+  addDummyShips: ->
+    @addShip(toRadians(59.329444), toRadians(18.068611))
+    @addShip(toRadians(50.329444), toRadians(18.068611))
+    @addShip(toRadians(40.329444), toRadians(18.068611))
+    @addShip(toRadians(40.329444), toRadians(8.068611))
+    @addShip(toRadians(30.329444), toRadians(8.068611))
+
+    @addShip(toRadians(40.329444), toRadians(0))
+    @addShip(toRadians(30.329444), toRadians(0))
+
+    for lat in [-8..8]
+      @addShip(toRadians(lat * 10), 0)
+
+  # Animates all ships and also sets the
+  # mayBeDestination and mayBePickup on the ports.
   animateShips: (deltaTime) ->
+    for port in @ports
+      port.mayBeDestination = true
+      if port.pickup
+        port.mayBePickup = false
+        port.reasons = ['already has pickup']
+      else
+        port.mayBePickup = true
+        port.reasons = []
+    for port in @ports
+      if port.pickup
+        port.pickup.destination.mayBeDestination = false
+        port.pickup.destination.mayBePickup = false
+        port.pickup.destination.reasons.push 'is pickup destination'
+
     for ship in @ships
       ship.animate(deltaTime)
+      if ship.cargo
+        ship.cargo.destination.mayBePickup = false
+        ship.cargo.destination.mayBeDestination = false
+        ship.cargo.destination.reasons.push 'is loaded cargo destination'
       ship.updateMesh()
       for port in @ports
         d2 = distanceSquared(
           ship.latitude, ship.longitude,
           port.latitude, port.longitude)
         if d2 <= PORT_RADIUS_SQUARED
-          if ship.cargo and ship.cargo.destination == port
-            ship.speed *= Math.pow(RETARDATION_AT_PORT, deltaTime)
+          port.mayBePickup = false
+          port.reasons.push 'has a ship'
+          shipAtDestination = (ship.cargo and ship.cargo.destination == port)
+          shipCanPickUp = (not ship.cargo and port.pickup)
+          if shipAtDestination or shipCanPickUp
+            ship.brakeAtPort(deltaTime)
             if Math.abs(ship.speed) <= MAX_SPEED_AT_PORT
-              console.log "ship reached #{port.name}"
-              @shipReachedDestination ship
+              if shipAtDestination
+                @shipReachedDestination ship
+              else
+                @pickup ship, port
+
+  createNewPickup: ->
+    port = @ports[Math.floor(Math.random() * @ports.length)]
+    destination = @ports[Math.floor(Math.random() * @ports.length)]
+    if port == destination
+      return false
+    if not port.mayBePickup
+      #console.log "Not allowed to use #{port.name} as pickup point"
+      return false
+    if not destination.mayBeDestination
+      #console.log "Not allowed to use #{destination.name} as destination"
+      return false
+
+    port.pickup = new Cargo destination: destination
+    console.log "New pickup at #{port.name} to #{destination.name}"
+    return true
 
   shipReachedDestination: (ship) ->
-    #wealth += ship.cargo.reward
+    console.log "ship reached destination"
     ship.cargo = null
     ship.speed = 0
 
+  pickup: (ship, port) ->
+    ship.cargo = port.pickup
+    port.pickup = null
+    console.log "Picked up cargo at #{port.name} with destination #{ship.cargo.destination.name}"
+
   onKeypress: (event) =>
-    console.log 'keypress', event
     if event.ctrlKey or event.altKey
       return
 
-    handled = true
     if @selectedShip
       if event.charCode == 65 or event.charCode == 97
         @selectedShip.bearing = wrapAngle(@selectedShip.bearing + Math.PI * 2 / 36)
@@ -141,10 +190,6 @@ class window.Game
         @selectedShip.speed += .1
       else if event.charCode == 83 or event.charCode == 115
         @selectedShip.speed -= .1
-      else
-        handled = false
-      if handled
-        console.log 'bearing', @selectedShip.bearing, 'speed', @selectedShip.speed
 
     event.preventDefault()
 
