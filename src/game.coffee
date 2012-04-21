@@ -21,6 +21,8 @@ class window.Game
     @graphics.createScene()
     @graphics.start()
 
+    @selectedShip = @addShip(0, 0)
+
     @addShip(toRadians(59.329444), toRadians(18.068611))
     @addShip(toRadians(50.329444), toRadians(18.068611))
     @addShip(toRadians(40.329444), toRadians(18.068611))
@@ -33,10 +35,10 @@ class window.Game
     for lat in [-8..8]
       @addShip(toRadians(lat * 10), 0)
 
-    @selectedShip = @addShip(0, 0)
-
     @addPort('Stockholm', toRadians(59.329444), toRadians(18.068611))
     @addPort('Atlantic', 0, 0)
+
+    @ships[0].cargo = new Cargo destination: @ports[0]
 
     $(@eventsElement)
       .mousedown(@onMouseDown)
@@ -113,7 +115,16 @@ class window.Game
           ship.latitude, ship.longitude,
           port.latitude, port.longitude)
         if d2 <= PORT_RADIUS_SQUARED
-          console.log "ship at port #{port.name}"
+          if ship.cargo and ship.cargo.destination == port
+            ship.speed *= Math.pow(RETARDATION_AT_PORT, deltaTime)
+            if Math.abs(ship.speed) <= MAX_SPEED_AT_PORT
+              console.log "ship reached #{port.name}"
+              @shipReachedDestination ship
+
+  shipReachedDestination: (ship) ->
+    #wealth += ship.cargo.reward
+    ship.cargo = null
+    ship.speed = 0
 
   onKeypress: (event) =>
     console.log 'keypress', event
