@@ -1,6 +1,7 @@
-
+PI = Math.PI
 Vector2 = THREE.Vector2
 Vector3 = THREE.Vector3
+Matrix4 = THREE.Matrix4
 ORIGIN = new Vector3(0, 0, 0)
 
 class window.Graphics
@@ -63,6 +64,8 @@ class window.Graphics
         1,  # radius
         25, # segmentsWidth
         50,  # segmentsHeight
+        -PI / 2,  # phiStart
+        2 * PI, # phiLength
       ),
       #new THREE.MeshLambertMaterial {color: 0xFF0000}
       @material
