@@ -1,9 +1,6 @@
 FPS = 60
 FRAME_LENGTH = 1 / FPS
 
-toRadians = (degrees) -> degrees / 360 * 2 * Math.PI
-toDegrees = (radians) -> radians / 2 / Math.PI * 360
-
 class window.Game
   constructor: ({parentElement}) ->
     @parentElement = parentElement

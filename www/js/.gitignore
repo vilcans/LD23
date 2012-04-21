@@ -5,4 +5,5 @@ script.js
 ship.js
 tracking.js
 async.js
+math-globals.js
 *-spec.js
