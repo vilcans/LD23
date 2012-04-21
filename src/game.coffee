@@ -2,8 +2,9 @@ FPS = 60
 FRAME_LENGTH = 1 / FPS
 
 class window.Game
-  constructor: ({parentElement}) ->
+  constructor: ({parentElement, eventsElement}) ->
     @parentElement = parentElement
+    @eventsElement = eventsElement
     @graphics = new Graphics(parentElement)
 
     @cameraLongitude = 0  # radians
@@ -33,7 +34,7 @@ class window.Game
 
     @selectedShip = @addShip(0, 0)
 
-    $(@parentElement)
+    $(@eventsElement)
       .mousedown(@onMouseDown)
       .mouseup(@onMouseUp)
 
@@ -121,11 +122,12 @@ class window.Game
     @mouseY = event.clientY
 
     @cameraRotationSpeed = 0
-    $(@parentElement).mousemove @onMouseDrag
+    $(@eventsElement).mousemove @onMouseDrag
+    event.preventDefault()
 
   onMouseUp: (event) =>
     @dragging = false
-    $(@parentElement).off 'mousemove', @onMouseDrag
+    $(@eventsElement).off 'mousemove', @onMouseDrag
 
   onMouseDrag: (event) =>
     if not @dragging
@@ -142,3 +144,5 @@ class window.Game
 
     @mouseX = x
     @mouseY = y
+
+    event.preventDefault()
