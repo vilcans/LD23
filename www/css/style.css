@@ -95,7 +95,11 @@ body {
   padding: 0;
 }
 
-
+#info {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 
 
 

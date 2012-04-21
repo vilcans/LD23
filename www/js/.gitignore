@@ -2,6 +2,7 @@
 game.js
 graphics.js
 script.js
+ship.js
 tracking.js
 async.js
 *-spec.js

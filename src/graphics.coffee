@@ -73,7 +73,15 @@ class window.Graphics
     @planet.position = ORIGIN
     @scene.add @planet
 
-    #@scene.add @object
+  addShip: ->
+    mesh = new THREE.SphereGeometry(.03, 6, 3)
+    mesh.applyMatrix(new Matrix4().setTranslation(0, 0, 1))
+    mesh = new THREE.Mesh(
+      mesh,
+      new THREE.MeshLambertMaterial {color: 0xffffff}
+    )
+    @scene.add mesh
+    return mesh
 
   start: ->
     @parentElement.appendChild @renderer.domElement

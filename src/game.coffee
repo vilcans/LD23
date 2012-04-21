@@ -1,6 +1,8 @@
 FPS = 60
 FRAME_LENGTH = 1 / FPS
 
+toRadians = (degrees) -> degrees / 360 * 2 * Math.PI
+
 class window.Game
   constructor: ({parentElement}) ->
     @parentElement = parentElement
@@ -9,12 +11,26 @@ class window.Game
     @cameraLongitude = 0  # radians
     @cameraRotationSpeed = 0  # radians per second
 
+    @ships = []
+
   init: (onFinished) ->
     @graphics.loadAssets(onFinished)
 
   start: ->
     @graphics.createScene()
     @graphics.start()
+
+    @addShip(toRadians(59.329444), toRadians(18.068611))
+    @addShip(toRadians(50.329444), toRadians(18.068611))
+    @addShip(toRadians(40.329444), toRadians(18.068611))
+    @addShip(toRadians(40.329444), toRadians(8.068611))
+    @addShip(toRadians(30.329444), toRadians(8.068611))
+
+    @addShip(toRadians(40.329444), toRadians(0))
+    @addShip(toRadians(30.329444), toRadians(0))
+
+    @addShip(toRadians(40.329444), toRadians(-8.068611))
+    @addShip(toRadians(30.329444), toRadians(-8.068611))
 
     $(@parentElement)
       .mousedown(@onMouseDown)
@@ -41,6 +57,12 @@ class window.Game
       window.clearInterval @timer
       @timer = null
 
+  addShip: (latitude, longitude) ->
+    mesh = @graphics.addShip()
+    ship = new Ship(mesh, latitude, longitude)
+    @ships.push ship
+    return ship
+
   handleVisibilityChange: (e) =>
     if document.mozVisibilityState != 'visible'
       @stopAnimation()
@@ -52,8 +74,12 @@ class window.Game
     if not @dragging
       @cameraLongitude += @cameraRotationSpeed * deltaTime
       @cameraRotationSpeed *= Math.pow(.1, deltaTime)
-      if Math.abs(@cameraRotationSpeed) < .001
+      if Math.abs(@cameraRotationSpeed) < .01
         @cameraRotationSpeed = 0
+
+    document.getElementById('camera-longitude').innerHTML = @cameraLongitude
+    for ship in @ships
+      ship.updateMesh()
 
     cameraAltitude = 3.4
     @graphics.setCameraPosition(
