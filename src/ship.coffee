@@ -3,7 +3,7 @@ class window.Ship
     @mesh = mesh
     @latitude = latitude
     @longitude = longitude
-    @speed = Math.PI * .1 # equatorial radians per second
+    @speed = 0 # equatorial radians per second
     @bearing = 0  # radians, where 0 is east
 
   animate: (deltaTime) ->
