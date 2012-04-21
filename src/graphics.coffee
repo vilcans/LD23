@@ -9,7 +9,7 @@ class window.Graphics
 
   loadAssets: (onFinished) ->
     callbacks = new Callbacks(onFinished)
-    @texture = THREE.ImageUtils.loadTexture('assets/dummy.png', {},
+    @texture = THREE.ImageUtils.loadTexture('assets/earth-diffuse.jpg', {},
       callbacks.add ->
     )
 

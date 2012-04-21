@@ -1,5 +1,7 @@
 WebGL based game, made for Ludum Dare 23, April 21-22, 2012
 
+Planet textures from [JHT's Pixel Emporium](http://planetpixelemporium.com/earth.html).
+
 # Notes to self
 
 ## Blender Exporter
