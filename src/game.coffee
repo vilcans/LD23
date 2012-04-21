@@ -2,6 +2,7 @@ FPS = 60
 FRAME_LENGTH = 1 / FPS
 
 toRadians = (degrees) -> degrees / 360 * 2 * Math.PI
+toDegrees = (radians) -> radians / 2 / Math.PI * 360
 
 class window.Game
   constructor: ({parentElement}) ->
@@ -29,8 +30,8 @@ class window.Game
     @addShip(toRadians(40.329444), toRadians(0))
     @addShip(toRadians(30.329444), toRadians(0))
 
-    @addShip(toRadians(40.329444), toRadians(-8.068611))
-    @addShip(toRadians(30.329444), toRadians(-8.068611))
+    for lat in [-9..9]
+      @addShip(toRadians(lat * 10), 0)
 
     $(@parentElement)
       .mousedown(@onMouseDown)
@@ -77,8 +78,9 @@ class window.Game
       if Math.abs(@cameraRotationSpeed) < .01
         @cameraRotationSpeed = 0
 
-    document.getElementById('camera-longitude').innerHTML = @cameraLongitude
+    document.getElementById('camera-longitude').innerHTML = toDegrees(@cameraLongitude) + '\u00b0'
     for ship in @ships
+      ship.animate(deltaTime)
       ship.updateMesh()
 
     cameraAltitude = 3.4
