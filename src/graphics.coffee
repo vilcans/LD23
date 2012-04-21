@@ -3,7 +3,9 @@ class window.Graphics
   constructor: (parentElement) ->
     @parentElement = parentElement
     @renderer = new THREE.WebGLRenderer()
-    @renderer.setSize parentElement.clientWidth, parentElement.clientHeight
+    @dimensions = new THREE.Vector2(
+      parentElement.clientWidth, parentElement.clientHeight)
+    @renderer.setSize @dimensions.x, @dimensions.y
 
     @stats = new Stats()
 
@@ -54,7 +56,7 @@ class window.Graphics
 
     @camera = new THREE.PerspectiveCamera(
       35,         # Field of view
-      800 / 640,  # Aspect ratio
+      @dimensions.x / @dimensions.y,  # Aspect ratio
       .1,         # Near
       10000       # Far
     )
