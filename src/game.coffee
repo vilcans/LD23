@@ -15,10 +15,10 @@ class window.Game
       .mouseup(@onMouseUp)
 
     document.addEventListener 'mozvisibilitychange', @handleVisibilityChange, false
-    if document.mozVisibilityState and document.mozVisibilityState == 'visible'
-      @startAnimation()
-    else
+    if document.mozVisibilityState and document.mozVisibilityState != 'visible'
       console.log 'Not starting animation because game not visible'
+    else
+      @startAnimation()
 
   startAnimation: ->
     if @timer
