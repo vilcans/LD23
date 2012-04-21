@@ -8,8 +8,9 @@ class window.Ship
 
   animate: (deltaTime) ->
     @longitude += @speed * Math.cos(@bearing) / Math.cos(@latitude) * deltaTime
-    #@latitude += deltaTime * @speed.y
-    #@longitude += deltaTime * @speed.x
+    @latitude += @speed * Math.sin(@bearing) * deltaTime
+    # if @latitude >= Math.PI / 2
+    #   @latitude -= Math.PI
 
   updateMesh: ->
     @mesh.eulerOrder = 'ZYX'

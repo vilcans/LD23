@@ -9,6 +9,7 @@ $(document).ready ->
     Tracking.trackEvent 'webgl', 'available', nonInteraction: true
     element = document.getElementById('game')
     game = new Game {parentElement: element}
+    window.game = game
     game.init ->
       console.log 'Game initialized!'
       $('.loading').hide()
