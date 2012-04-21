@@ -60,7 +60,7 @@ class window.Graphics
       .1,         # Near
       10000       # Far
     )
-    @camera.position.set(-15, 10, 15)
+    @camera.position.set(0, 0, 3.4)
     @camera.lookAt @scene.position
     @scene.add @camera
 
@@ -70,7 +70,7 @@ class window.Graphics
 
     @planet = new THREE.Mesh(
       new THREE.SphereGeometry(
-        5,  # radius
+        1,  # radius
         25, # segmentsWidth
         50,  # segmentsHeight
       ),
