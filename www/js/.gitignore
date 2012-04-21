@@ -7,5 +7,6 @@ port.js
 tracking.js
 async.js
 constants.js
+cargo.js
 math-globals.js
 *-spec.js

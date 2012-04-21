@@ -13,6 +13,7 @@ class window.Game
 
     @ships = []
     @ports = []
+    @timeToNextPickup = INITIAL_PICKUP_DELAY
 
   init: (onFinished) ->
     @graphics.loadAssets(onFinished)
@@ -28,8 +29,6 @@ class window.Game
     @addPort('Stockholm', toRadians(59.329444), toRadians(18.068611))
     @addPort('Atlantic', 0, 0)
     @addPort('New York', toRadians(40.664167), toRadians(-73.938611))
-
-    @ships[0].cargo = new Cargo destination: @ports[0]
 
     $(@eventsElement)
       .mousedown(@onMouseDown)
@@ -81,7 +80,9 @@ class window.Game
 
     @animateShips(deltaTime)
 
-    @createNewPickup()  # must be called after animateShips
+    if (@timeToNextPickup -= deltaTime) <= 0
+      @timeToNextPickup = PICKUP_DELAY
+      @createNewPickup()  # must be called after animateShips
 
     if @selectedShip
       @cameraLongitude = @selectedShip.longitude
