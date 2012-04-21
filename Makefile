@@ -13,7 +13,10 @@ js:
 continuous:
 	coffee -w -c -o www/js/ src/
 
-release: js
+audio:
+	$(MAKE) -C www/assets/audio
+
+release: js audio
 	ant -f www/build/build.xml
 
-.PHONY: clean js continuous release
+.PHONY: clean js continuous release audio

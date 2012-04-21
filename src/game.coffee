@@ -166,17 +166,20 @@ class window.Game
 
     port.pickup = new Cargo destination: destination
     console.log "New pickup at #{port.name} to #{destination.name}"
+    Audio.play 'new-request'
     return true
 
   shipReachedDestination: (ship) ->
     console.log "ship reached destination"
     ship.cargo = null
     ship.speed = 0
+    Audio.play 'dropoff'
 
   pickup: (ship, port) ->
     ship.cargo = port.pickup
     port.pickup = null
     console.log "Picked up cargo at #{port.name} with destination #{ship.cargo.destination.name}"
+    Audio.play 'pickup'
 
   onKeypress: (event) =>
     if event.ctrlKey or event.altKey

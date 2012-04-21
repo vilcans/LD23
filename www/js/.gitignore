@@ -9,4 +9,5 @@ async.js
 constants.js
 cargo.js
 math-globals.js
+audio.js
 *-spec.js
