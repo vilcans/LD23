@@ -42,7 +42,6 @@ class window.Game
       @startAnimation()
 
   animate: =>
-    @graphics.cube.translateX .01
     @graphics.render()
 
   onMouseDown: (event) =>

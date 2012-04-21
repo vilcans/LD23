@@ -1,5 +1,6 @@
-Base for a WebGL based game.
-Made in preparation for Ludum Dare 23.
+WebGL based game, made for Ludum Dare 23, April 21-22, 2012
+
+# Notes to self
 
 ## Blender Exporter
 

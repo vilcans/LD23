@@ -36,18 +36,18 @@ class window.Graphics
           texture: @texture
     )
 
-    loader = new THREE.JSONLoader()
-    loader.load(
-      'assets/box.js',
-      callbacks.add (geometry) =>
-        #console.log 'got geo', geometry
-        #geometry.materials[0].shading = THREE.FlatShading
-        #material = new THREE.MeshFaceMaterial()
-        @object = new THREE.Mesh geometry, @material
-        #mesh2.position.x = - 400;
-        #mesh2.scale.x = mesh2.scale.y = mesh2.scale.z = 250;
-        #@scene.add mesh
-    )
+    #loader = new THREE.JSONLoader()
+    #loader.load(
+    #  'assets/box.js',
+    #  callbacks.add (geometry) =>
+    #    #console.log 'got geo', geometry
+    #    #geometry.materials[0].shading = THREE.FlatShading
+    #    #material = new THREE.MeshFaceMaterial()
+    #    @object = new THREE.Mesh geometry, @material
+    #    #mesh2.position.x = - 400;
+    #    #mesh2.scale.x = mesh2.scale.y = mesh2.scale.z = 250;
+    #    #@scene.add mesh
+    #)
 
   createScene: ->
     @scene = new THREE.Scene()
@@ -66,15 +66,19 @@ class window.Graphics
     @light.position.set(10, 0, 10)
     @scene.add @light
 
-    @cube = new THREE.Mesh(
-      new THREE.CubeGeometry(5, 5, 5),
+    @planet = new THREE.Mesh(
+      new THREE.SphereGeometry(
+        5,  # radius
+        25, # segmentsWidth
+        50,  # segmentsHeight
+      ),
       #new THREE.MeshLambertMaterial {color: 0xFF0000}
       @material
     )
-    @cube.position.set(12, 0, 0)
-    @scene.add @cube
+    @planet.position.set(0, 0, 0)
+    @scene.add @planet
 
-    @scene.add @object
+    #@scene.add @object
 
   start: ->
     @parentElement.appendChild @renderer.domElement
