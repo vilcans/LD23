@@ -103,6 +103,11 @@ class window.Game
       @selectedShip.bearing += Math.PI * 2 / 36
     else if event.keyCode == 39
       @selectedShip.bearing -= Math.PI * 2 / 36
+    else if event.keyCode == 38
+      @selectedShip.speed += .1
+    else if event.keyCode == 40
+      @selectedShip.speed -= .1
+
     console.log 'bearing', @selectedShip.bearing
 
   onMouseDown: (event) =>
