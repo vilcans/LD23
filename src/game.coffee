@@ -95,7 +95,7 @@ class window.Game
         if Math.abs(@cameraRotationSpeed) < .01
           @cameraRotationSpeed = 0
 
-    @graphics.setCamera @cameraLatitude, @cameraLongitude, 2.4
+    @graphics.setCamera @cameraLatitude, @cameraLongitude, CAMERA_ALTITUDE
     @graphics.render()
 
   addDummyShips: ->
