@@ -4,6 +4,7 @@ class window.Port
     @latitude = latitude
     @longitude = longitude
     @name = name
+    @htmlName = '<span class="port">' + @name + '</span>'
 
     @mesh.eulerOrder = 'YXZ'
     @mesh.rotation.x = -@latitude

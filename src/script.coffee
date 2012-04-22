@@ -12,6 +12,7 @@ $(document).ready ->
       parentElement: element
       eventsElement: document.body
       fleetListElement: document.getElementById('fleetList')
+      announcementListElement: document.getElementById('announcementList')
     }
     window.game = game
     game.init ->

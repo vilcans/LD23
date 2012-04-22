@@ -1,6 +1,7 @@
 class window.Ship
   constructor: ({name, mesh, listElement, latitude, longitude}) ->
     @name = name or Ship.createName()
+    @htmlName = '<span class="ship">' + @name + '</span>'
     @alive = true
     @mesh = mesh
     @listElement = listElement

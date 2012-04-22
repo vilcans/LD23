@@ -86,6 +86,12 @@ body {
   text-shadow: 0px 0px 15px #f20;
 }
 
+li {
+  margin: 1px 0;
+  padding: 0;
+  list-style-type: none;
+}
+
 #game {
   position: relative;
   width: 800px;
@@ -103,38 +109,58 @@ body {
   right: 0;
 }
 
-#hud {
+.hud {
   position: absolute;
   top: 0;
+  overflow: hidden;
 }
-
-#fleet {
-  padding: 5px;
-}
-#hud h2 {
-}
-#hud ul {
+.hud ul {
   margin: 0;
   padding: 0;
 }
-#hud li {
-  margin: 1px 0;
+
+#fleet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 5px;
+  width: 150px;
+  overflow: hidden;
+}
+#fleet h2 {
   padding: 0;
+}
+#fleet li {
   font-size: 12px;
   display: block;
-  list-style-type: none;
-}
-#hud li {
   color: #8f8;
   cursor: pointer;
 }
-#hud li.selected {
+#fleet li.selected {
   background: rgba(255, 192, 0, .5);
+  color: #fff;
 }
-#hud li.destroyed {
+#fleet li.destroyed {
   color: #888;
 }
 
+#announcements {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+  top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
+
+.ship {
+  color: #8f8;
+}
+.port {
+  color: #f83;
+}
 
 /* =============================================================================
    Media Queries

@@ -2,10 +2,16 @@ FPS = 60
 FRAME_LENGTH = 1 / FPS
 
 class window.Game
-  constructor: ({parentElement, eventsElement, fleetListElement}) ->
+  constructor: ({
+    parentElement,
+    eventsElement,
+    fleetListElement,
+    announcementListElement
+  }) ->
     @parentElement = parentElement
     @eventsElement = eventsElement
     @fleetListElement = fleetListElement
+    @announcementListElement = announcementListElement
 
     @graphics = new Graphics(parentElement)
 
@@ -168,8 +174,8 @@ class window.Game
     for ship in @ships
       ship.animate(deltaTime)
       if not @map.isWater(ship.latitude, ship.longitude)
-        console.log "#{ship.name} ran aground!"
         Audio.play 'explosion'
+        @announce "#{ship.htmlName} ran aground!"
         @destroyShip(ship)
         continue
       if ship.cargo
@@ -200,7 +206,7 @@ class window.Game
         if s1 == s2
           continue
         if s1.collidesWith(s2)
-          console.log "#{s1.name} and #{s2.name} collided!"
+          @announce "#{s1.htmlName} and #{s2.htmlName} collided!"
           Audio.play 'explosion'
           @destroyShip s1
           @destroyShip s2
@@ -240,12 +246,12 @@ class window.Game
       return false
 
     port.pickup = new Cargo destination: destination
-    console.log "New pickup at #{port.name} to #{destination.name}"
+    @announce "New pickup at #{port.htmlName} to #{destination.htmlName}"
     Audio.play 'new-request'
     return true
 
   shipReachedDestination: (ship) ->
-    console.log "ship reached destination"
+    @announce "#{ship.htmlName} reached #{ship.destination.htmlName}"
     ship.cargo = null
     ship.speed = 0
     Audio.play 'dropoff'
@@ -253,7 +259,7 @@ class window.Game
   pickup: (ship, port) ->
     ship.cargo = port.pickup
     port.pickup = null
-    console.log "Picked up cargo at #{port.name} with destination #{ship.cargo.destination.name}"
+    @announce "#{ship.htmlName} picked up cargo with destination #{ship.cargo.destination.htmlName}"
     Audio.play 'pickup'
 
   onKeyDown: (event) =>
@@ -307,3 +313,11 @@ class window.Game
     @mouseY = y
 
     event.preventDefault()
+
+  announce: (html, delay=4000) ->
+    li = document.createElement('li')
+    li.innerHTML = html
+    @announcementListElement.appendChild li
+    window.setTimeout((->
+      $(li).fadeOut('slow')
+    ), delay)
