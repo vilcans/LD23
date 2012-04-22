@@ -26,6 +26,8 @@ class window.Game
     @followingSelected = false
     @keys = {}
 
+    @animating = false
+
   init: (onFinished) ->
     @graphics.loadAssets =>
       @map = new Map(@graphics.waterImage)
@@ -62,19 +64,18 @@ class window.Game
     $(document).keydown(@onKeyDown).keyup(@onKeyUp)
 
   startAnimation: ->
-    if @timer
+    if @animating
       console.log 'animation already started!'
     else
       console.log 'starting animation'
-      @timer = window.setInterval @animate, FRAME_LENGTH * 1000
+      @animating = true
+      requestAnimationFrame @animationFrame
 
   stopAnimation: ->
-    if not @timer
+    if not @animating
       console.log 'animation not running'
     else
-      console.log 'stopping animation'
-      window.clearInterval @timer
-      @timer = null
+      @animating = false
 
   addShip: (latitude, longitude) ->
     mesh = @graphics.addShip()
@@ -117,6 +118,11 @@ class window.Game
       @stopAnimation()
     else
       @startAnimation()
+
+  animationFrame: =>
+    if @animating
+      requestAnimationFrame @animationFrame
+    @animate()
 
   animate: =>
     deltaTime = FRAME_LENGTH
