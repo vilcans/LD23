@@ -102,6 +102,7 @@ class window.Game
         @announce 'Control ship with <strong>W A S D</strong>', 10000
         @timeToNextPickup = INITIAL_PICKUP_DELAY
       if ship.alive
+        Audio.play 'select'
         @selectShip ship
     @fleetListElement.appendChild(li)
     ship.listElement = li
