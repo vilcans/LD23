@@ -17,6 +17,8 @@ class window.Game
     @ports = []
     @timeToNextPickup = INITIAL_PICKUP_DELAY
 
+    @followingSelected = false
+
   init: (onFinished) ->
     @graphics.loadAssets(onFinished)
 
@@ -37,9 +39,10 @@ class window.Game
     # http://ports.com/cape-verde/port-of-vale-cavaleiros/
     @addPort('Cape Verde', 0.2606300172003132, -0.42556363151377735)
 
-    $(@eventsElement)
+    $(@graphics.renderer.domElement)
       .mousedown(@onMouseDown)
-      .mouseup(@onMouseUp)
+      .click(@onMouseClick)
+    $(document.body).mouseup(@onMouseUp)
 
     document.addEventListener 'mozvisibilitychange', @handleVisibilityChange, false
     if document.mozVisibilityState and document.mozVisibilityState != 'visible'
@@ -85,6 +88,7 @@ class window.Game
   selectShip: (ship) ->
     if @selectedShip
       @deselectShip()
+    @followingSelected = true
     @selectedShip = ship
     $(ship.listElement).addClass('selected')
 
@@ -111,9 +115,10 @@ class window.Game
 
     @collideShips()
 
-    if @selectedShip
+    if @selectedShip and @followingSelected
       @cameraLongitude = @selectedShip.longitude
       @cameraLatitude = @selectedShip.latitude
+      @cameraRotationSpeed = 0
     else
       @cameraLatitude = 0
       if not @dragging
@@ -178,7 +183,7 @@ class window.Game
         if s1 == s2
           continue
         if s1.collidesWith(s2)
-          console.log 'Ships collided!'
+          console.log "#{s1.name} and #{s2.name} collided!"
           @destroyShip s1
           @destroyShip s2
 
@@ -260,17 +265,17 @@ class window.Game
     $(@eventsElement).off 'mousemove', @onMouseDrag
 
   onMouseDrag: (event) =>
-    if not @dragging
-      return
-
     x = event.clientX
     y = event.clientY
-    dx = x - @mouseX
-    dy = y - @mouseY
 
-    dLat = -dx / @graphics.dimensions.x * 3
-    @cameraLongitude = wrapAngle(@cameraLongitude + dLat)
-    @cameraRotationSpeed = dLat / FRAME_LENGTH
+    if @dragging
+      @followingSelected = false
+      dx = x - @mouseX
+      dy = y - @mouseY
+
+      dLat = -dx / @graphics.dimensions.x * 3
+      @cameraLongitude = wrapAngle(@cameraLongitude + dLat)
+      @cameraRotationSpeed = dLat / FRAME_LENGTH
 
     @mouseX = x
     @mouseY = y
