@@ -24,7 +24,7 @@ class window.Game
     @graphics.createScene()
     @graphics.start()
 
-    @selectedShip = @addShip(0, 0)
+    @addShip(0, 0)
 
     @addDummyShips()
 
@@ -66,17 +66,25 @@ class window.Game
 
   addShip: (latitude, longitude) ->
     mesh = @graphics.addShip()
-    ship = new Ship(mesh, latitude, longitude)
+    ship = new Ship {mesh: mesh, latitude: latitude, longitude: longitude}
     @ships.push ship
     li = document.createElement('li')
     a = document.createElement('a')
     a.href = '#'
     a.innerHTML = 'S/S Titanic' # ship.name
-    a.addEventListener 'click', (event) ->
-      console.log 'clicked', ship
+    li.addEventListener 'click', (event) =>
+      if ship.alive
+        @selectShip ship
     li.appendChild(a)
     @fleetListElement.appendChild(li)
+    ship.listElement = li
     return ship
+
+  selectShip: (ship) ->
+    if @selectedShip
+      @deselectShip()
+    @selectedShip = ship
+    $(ship.listElement).addClass('selected')
 
   addPort: (name, latitude, longitude) ->
     mesh = @graphics.addPort()
@@ -173,6 +181,10 @@ class window.Game
           @destroyShip s2
 
   destroyShip: (ship) ->
+    ship.alive = false
+    $element = $(ship.listElement)
+    $element.slideUp 500, ->
+      $element.remove()
     if ship == @selectedShip
       @deselectShip()
     newArray = []
@@ -183,7 +195,9 @@ class window.Game
     @graphics.destroyShip ship.mesh
 
   deselectShip: ->
-    @selectedShip = null
+    if @selectedShip
+      $(@selectedShip.listElement).removeClass 'selected'
+      @selectedShip = null
 
   createNewPickup: ->
     port = @ports[Math.floor(Math.random() * @ports.length)]

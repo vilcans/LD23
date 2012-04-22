@@ -126,9 +126,11 @@ body {
 }
 #hud li a {
   text-decoration: none;
-  color: white;
+  color: #8f8;
 }
-
+#hud li.selected {
+  background: rgba(255, 192, 0, .5);
+}
 
 
 /* =============================================================================

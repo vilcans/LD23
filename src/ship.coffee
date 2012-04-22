@@ -1,6 +1,8 @@
 class window.Ship
-  constructor: (mesh, latitude, longitude) ->
+  constructor: ({mesh, listElement, latitude, longitude}) ->
+    @alive = true
     @mesh = mesh
+    @listElement = listElement
     @latitude = latitude
     @longitude = longitude
     @speed = 0 # equatorial radians per second
