@@ -83,14 +83,20 @@ class window.Game
     }
     @ships.push ship
     li = document.createElement('li')
-    nameElement = document.createElement('span')
+    nameElement = document.createElement('div')
+    nameElement.className = 'ship'
     nameElement.innerHTML = ship.name
+    destinationElement = document.createElement('div')
+    nameElement.className = 'destination'
+    destinationElement.innerHTML = '&nbsp;' #\u2192 Rotterdam'
+    li.appendChild(nameElement)
+    li.appendChild(destinationElement)
     li.addEventListener 'click', (event) =>
       if ship.alive
         @selectShip ship
-    li.appendChild(nameElement)
     @fleetListElement.appendChild(li)
     ship.listElement = li
+    ship.destinationElement = destinationElement
     return ship
 
   selectShip: (ship) ->
@@ -251,7 +257,8 @@ class window.Game
     return true
 
   shipReachedDestination: (ship) ->
-    @announce "#{ship.htmlName} reached #{ship.destination.htmlName}"
+    @announce "#{ship.htmlName} unloaded at #{ship.destination.htmlName}"
+    ship.destinationElement.innerHTML = '&nbsp;'
     ship.cargo = null
     ship.speed = 0
     Audio.play 'dropoff'
@@ -259,7 +266,8 @@ class window.Game
   pickup: (ship, port) ->
     ship.cargo = port.pickup
     port.pickup = null
-    @announce "#{ship.htmlName} picked up cargo with destination #{ship.cargo.destination.htmlName}"
+    @announce "#{ship.htmlName} picked up cargo for \u2192 #{ship.cargo.destination.htmlName}"
+    ship.destinationElement.innerHTML = '\u2192 ' + ship.cargo.destination
     Audio.play 'pickup'
 
   onKeyDown: (event) =>
