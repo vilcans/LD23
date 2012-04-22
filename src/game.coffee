@@ -208,8 +208,11 @@ class window.Game
   destroyShip: (ship) ->
     ship.alive = false
     $element = $(ship.listElement)
-    $element.slideUp 500, ->
-      $element.remove()
+    $element.addClass 'destroyed'
+    window.setTimeout(
+      -> $element.slideUp(500, -> $element.remove())
+      500
+    )
     if ship == @selectedShip
       @deselectShip()
     newArray = []
