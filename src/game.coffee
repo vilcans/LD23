@@ -114,7 +114,7 @@ class window.Game
       @deselectShip()
     @followingSelected = true
     @selectedShip = ship
-    $(ship.listElement).addClass('selected')
+    ship.listElement.className = 'selected'
 
   addPort: (name, latitude, longitude) ->
     mesh = @graphics.addPort()
@@ -239,14 +239,13 @@ class window.Game
 
   destroyShip: (ship) ->
     ship.alive = false
-    $element = $(ship.listElement)
-    $element.addClass 'destroyed'
-    window.setTimeout(
-      -> $element.remove()
-      500
-    )
     if ship == @selectedShip
       @deselectShip()
+    ship.listElement.className = 'destroyed'
+    window.setTimeout((->
+      ship.listElement.parentNode.removeChild(ship.listElement)
+    ), 500)
+
     newArray = []
     for i in [0...@ships.length]
       if @ships[i] != ship
@@ -256,7 +255,7 @@ class window.Game
 
   deselectShip: ->
     if @selectedShip
-      $(@selectedShip.listElement).removeClass 'selected'
+      @selectedShip.listElement.className = ''
       @selectedShip = null
 
   createNewPickup: ->
@@ -347,5 +346,5 @@ class window.Game
     li.innerHTML = html
     @announcementListElement.appendChild li
     window.setTimeout((->
-      $(li).remove()
+      li.parentNode.removeChild(li)
     ), delay)
