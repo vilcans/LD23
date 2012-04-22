@@ -141,9 +141,10 @@ class window.Game
     deltaTime = FRAME_LENGTH
 
     if @ships.length == 0 and not @gameover
+      window.setTimeout(@gameoverCallback, 2000)
       @announce 'You have lost your fleet!'
       @gameover = true
-      window.setTimeout(@gameoverCallback, 2000)
+      Audio.play 'gameover'
 
     if @selectedShip
       if @keys.up
