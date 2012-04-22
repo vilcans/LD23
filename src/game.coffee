@@ -265,12 +265,12 @@ class window.Game
       return false
 
     port.pickup = new Cargo destination: destination
-    @announce "New pickup at #{port.htmlName} to #{destination.htmlName}"
+    @announce "New pickup at #{port.htmlName} to \u2192 #{destination.htmlName}"
     Audio.play 'new-request'
     return true
 
   shipReachedDestination: (ship) ->
-    @announce "#{ship.htmlName} unloaded at #{ship.destination.htmlName}"
+    @announce "#{ship.htmlName} unloaded at \u2192 #{ship.cargo.destination.htmlName}"
     ship.destinationElement.innerHTML = '&nbsp;'
     ship.cargo = null
     ship.speed = 0
@@ -280,7 +280,7 @@ class window.Game
     ship.cargo = port.pickup
     port.pickup = null
     @announce "#{ship.htmlName} picked up cargo for \u2192 #{ship.cargo.destination.htmlName}"
-    ship.destinationElement.innerHTML = '\u2192 ' + ship.cargo.destination
+    ship.destinationElement.innerHTML = '\u2192 ' + ship.cargo.destination.name
     Audio.play 'pickup'
 
   onKeyDown: (event) =>
