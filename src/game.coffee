@@ -116,8 +116,8 @@ class window.Game
     @collideShips()
 
     if @selectedShip and @followingSelected
-      @cameraLongitude = @selectedShip.longitude
-      @cameraLatitude = @selectedShip.latitude
+      @cameraLongitude += (@selectedShip.longitude - @cameraLongitude) * .25
+      @cameraLatitude += (@selectedShip.latitude - @cameraLatitude) * .25
       @cameraRotationSpeed = 0
     else
       @cameraLatitude = 0
