@@ -28,3 +28,10 @@ class window.Ship
 
   brakeAtPort: (deltaTime) ->
     @speed *= Math.pow(RETARDATION_AT_PORT, deltaTime)
+
+  collidesWith: (otherShip) ->
+    d2 = distanceSquared(
+      @latitude, @longitude,
+      otherShip.latitude, otherShip.longitude
+    )
+    return d2 <= SHIP_RADIUS_SQUARED

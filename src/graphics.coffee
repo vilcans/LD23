@@ -54,7 +54,7 @@ class window.Graphics
     loader.load(
       'assets/ship.js',
       callbacks.add (geometry) =>
-        scale = .025
+        scale = SHIP_MESH_SCALE
         geometry.applyMatrix(new Matrix4().setScale(scale, scale, scale))
         # Move to planet's surface
         geometry.applyMatrix(new Matrix4().setTranslation(0, 0, 1))
@@ -95,6 +95,9 @@ class window.Graphics
     mesh = new THREE.Mesh @shipGeometry, @shipMaterial
     @scene.add mesh
     return mesh
+
+  destroyShip: (mesh) ->
+    @scene.remove mesh
 
   addPort: ->
     mesh = new THREE.CylinderGeometry(

@@ -89,6 +89,8 @@ class window.Game
       @timeToNextPickup = PICKUP_DELAY
       @createNewPickup()  # must be called after animateShips
 
+    @collideShips()
+
     if @selectedShip
       @cameraLongitude = @selectedShip.longitude
       @cameraLatitude = @selectedShip.latitude
@@ -149,6 +151,29 @@ class window.Game
                 @shipReachedDestination ship
               else
                 @pickup ship, port
+
+  collideShips: ->
+    for s1 in @ships
+      for s2 in @ships
+        if s1 == s2
+          continue
+        if s1.collidesWith(s2)
+          console.log 'Ships collided!'
+          @destroyShip s1
+          @destroyShip s2
+
+  destroyShip: (ship) ->
+    if ship == @selectedShip
+      @deselectShip()
+    newArray = []
+    for i in [0...@ships.length]
+      if @ships[i] != ship
+        newArray.push @ships[i]
+    @ships = newArray
+    @graphics.destroyShip ship.mesh
+
+  deselectShip: ->
+    @selectedShip = null
 
   createNewPickup: ->
     port = @ports[Math.floor(Math.random() * @ports.length)]
