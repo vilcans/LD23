@@ -13,6 +13,7 @@ $(document).ready ->
       eventsElement: document.body
       fleetListElement: document.getElementById('fleetList')
       announcementListElement: document.getElementById('announcementList'),
+      fleetHelpElement: document.getElementById('fleetHelp'),
       gameoverCallback: ->
         Tracking.trackEvent 'game', 'over'
         $('#gameover').show()

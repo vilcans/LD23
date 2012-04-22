@@ -7,12 +7,14 @@ class window.Game
     eventsElement,
     fleetListElement,
     announcementListElement,
+    fleetHelpElement,
     gameoverCallback
   }) ->
     @parentElement = parentElement
     @eventsElement = eventsElement
     @fleetListElement = fleetListElement
     @announcementListElement = announcementListElement
+    @fleetHelpElement = fleetHelpElement
     @gameoverCallback = gameoverCallback;
 
     @graphics = new Graphics(parentElement)
@@ -23,7 +25,7 @@ class window.Game
 
     @ships = []
     @ports = []
-    @timeToNextPickup = INITIAL_PICKUP_DELAY
+    @timeToNextPickup = 1e9
 
     @followingSelected = false
     @keys = {}
@@ -95,6 +97,11 @@ class window.Game
     li.appendChild(nameElement)
     li.appendChild(destinationElement)
     li.addEventListener 'click', (event) =>
+      if @fleetHelpElement
+        @fleetHelpElement.parentNode.removeChild(@fleetHelpElement)
+        @fleetHelpElement = null
+        @announce 'Control ship with <strong>W A S D</strong>', 10000
+        @timeToNextPickup = INITIAL_PICKUP_DELAY
       if ship.alive
         @selectShip ship
     @fleetListElement.appendChild(li)
