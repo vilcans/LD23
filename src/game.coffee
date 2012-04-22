@@ -18,6 +18,7 @@ class window.Game
     @timeToNextPickup = INITIAL_PICKUP_DELAY
 
     @followingSelected = false
+    @keys = {}
 
   init: (onFinished) ->
     @graphics.loadAssets(onFinished)
@@ -50,7 +51,7 @@ class window.Game
     else
       @startAnimation()
 
-    document.addEventListener 'keypress', @onKeypress
+    $(document).keydown(@onKeyDown).keyup(@onKeyUp)
 
   startAnimation: ->
     if @timer
@@ -106,6 +107,16 @@ class window.Game
 
   animate: =>
     deltaTime = FRAME_LENGTH
+
+    if @selectedShip
+      if @keys.up
+        @selectedShip.accelerate deltaTime
+      else if @keys.down
+        @selectedShip.decelerate deltaTime
+      if @keys.left
+        @selectedShip.turn 1, deltaTime
+      if @keys.right
+        @selectedShip.turn -1, deltaTime
 
     @animateShips(deltaTime)
 
@@ -235,21 +246,26 @@ class window.Game
     console.log "Picked up cargo at #{port.name} with destination #{ship.cargo.destination.name}"
     Audio.play 'pickup'
 
-  onKeypress: (event) =>
+  onKeyDown: (event) =>
+    @setKeys event, true
+    event.preventDefault()
+
+  onKeyUp: (event) =>
+    @setKeys event, false
+    event.preventDefault()
+
+  setKeys: (event, value) ->
     if event.ctrlKey or event.altKey
       return
-
-    if @selectedShip
-      if event.charCode == 65 or event.charCode == 97
-        @selectedShip.bearing = wrapAngle(@selectedShip.bearing + Math.PI * 2 / 36)
-      else if event.charCode == 68 or event.charCode == 100
-        @selectedShip.bearing = wrapAngle(@selectedShip.bearing - Math.PI * 2 / 36)
-      else if event.charCode == 87 or event.charCode == 119
-        @selectedShip.speed += .1
-      else if event.charCode == 83 or event.charCode == 115
-        @selectedShip.speed -= .1
-
-    event.preventDefault()
+    code = event.keyCode
+    if code == 65 or code == 97
+      @keys.left = value
+    else if code == 68 or code == 100
+      @keys.right = value
+    else if code == 87 or code == 119
+      @keys.up = value
+    else if code == 83 or code == 115
+      @keys.down = value
 
   onMouseDown: (event) =>
     @dragging = true

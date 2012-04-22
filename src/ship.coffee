@@ -9,6 +9,14 @@ class window.Ship
     @speed = 0 # equatorial radians per second
     @bearing = 0  # radians, where 0 is east
 
+    @maxSpeed = .4
+    @minSpeed = -.2
+    # equatorial radians per second squared
+    @acceleration = 1
+    @deceleration = 1
+
+    @turnSpeed = Math.PI  # radians per second
+
   animate: (deltaTime) ->
     cosLat = Math.cos(@latitude)
     @longitude = wrapAngle(
@@ -38,6 +46,20 @@ class window.Ship
       otherShip.latitude, otherShip.longitude
     )
     return d2 <= SHIP_RADIUS_SQUARED
+
+  accelerate: (deltaTime) ->
+    @speed += @acceleration * deltaTime
+    if @speed > @maxSpeed
+      @speed = @maxSpeed
+
+  decelerate: (deltaTime) ->
+    @speed -= @deceleration * deltaTime
+    if @speed < @minSpeed
+      @speed = @minSpeed
+
+  turn: (direction, deltaTime) ->
+    delta = direction * @turnSpeed * deltaTime * Math.abs(@speed / @maxSpeed)
+    @bearing = wrapAngle(@bearing + delta)
 
 Ship.createName = ->
   i = Math.floor(Math.random() * shipNames.length)
