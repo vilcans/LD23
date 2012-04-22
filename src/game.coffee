@@ -77,13 +77,12 @@ class window.Game
     }
     @ships.push ship
     li = document.createElement('li')
-    a = document.createElement('a')
-    a.href = '#'
-    a.innerHTML = ship.name
+    nameElement = document.createElement('span')
+    nameElement.innerHTML = ship.name
     li.addEventListener 'click', (event) =>
       if ship.alive
         @selectShip ship
-    li.appendChild(a)
+    li.appendChild(nameElement)
     @fleetListElement.appendChild(li)
     ship.listElement = li
     return ship

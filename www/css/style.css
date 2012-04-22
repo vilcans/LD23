@@ -124,9 +124,9 @@ body {
   display: block;
   list-style-type: none;
 }
-#hud li a {
-  text-decoration: none;
+#hud li {
   color: #8f8;
+  cursor: pointer;
 }
 #hud li.selected {
   background: rgba(255, 192, 0, .5);
