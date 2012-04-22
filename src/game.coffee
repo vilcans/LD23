@@ -66,12 +66,14 @@ class window.Game
 
   addShip: (latitude, longitude) ->
     mesh = @graphics.addShip()
-    ship = new Ship {mesh: mesh, latitude: latitude, longitude: longitude}
+    ship = new Ship {
+      mesh: mesh, latitude: latitude, longitude: longitude
+    }
     @ships.push ship
     li = document.createElement('li')
     a = document.createElement('a')
     a.href = '#'
-    a.innerHTML = 'S/S Titanic' # ship.name
+    a.innerHTML = ship.name
     li.addEventListener 'click', (event) =>
       if ship.alive
         @selectShip ship

@@ -1,5 +1,6 @@
 class window.Ship
-  constructor: ({mesh, listElement, latitude, longitude}) ->
+  constructor: ({name, mesh, listElement, latitude, longitude}) ->
+    @name = name or Ship.createName()
     @alive = true
     @mesh = mesh
     @listElement = listElement
@@ -37,3 +38,7 @@ class window.Ship
       otherShip.latitude, otherShip.longitude
     )
     return d2 <= SHIP_RADIUS_SQUARED
+
+Ship.createName = ->
+  i = Math.floor(Math.random() * shipNames.length)
+  return "M/S #{shipNames[i]}"

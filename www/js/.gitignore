@@ -10,4 +10,5 @@ constants.js
 cargo.js
 math-globals.js
 audio.js
+ship-names.js
 *-spec.js

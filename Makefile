@@ -16,7 +16,12 @@ continuous:
 audio:
 	$(MAKE) -C www/assets/audio
 
-release: js audio
+generate: js audio www/js/ship-names.js
+
+www/js/ship-names.js: ship-names.csv convert-names.py
+	./convert-names.py >$@
+
+release: generate
 	ant -f www/build/build.xml
 
-.PHONY: clean js continuous release audio
+.PHONY: clean js continuous generate release audio
