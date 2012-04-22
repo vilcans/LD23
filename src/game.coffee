@@ -116,11 +116,11 @@ class window.Game
     @collideShips()
 
     if @selectedShip and @followingSelected
-      @cameraLongitude += (@selectedShip.longitude - @cameraLongitude) * .25
-      @cameraLatitude += (@selectedShip.latitude - @cameraLatitude) * .25
+      @cameraLongitude += wrapAngle((@selectedShip.longitude - @cameraLongitude) * CAMERA_SPEED)
+      @cameraLatitude += wrapAngle((@selectedShip.latitude - @cameraLatitude) * CAMERA_SPEED)
       @cameraRotationSpeed = 0
     else
-      @cameraLatitude = 0
+      @cameraLatitude += -@cameraLatitude * CAMERA_SPEED
       if not @dragging
         @cameraLongitude += @cameraRotationSpeed * deltaTime
         @cameraRotationSpeed *= Math.pow(.1, deltaTime)
