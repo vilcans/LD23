@@ -36,6 +36,8 @@ class window.Game
 
     @dropoffs = 0
 
+    @totalTime = 0
+
   init: (onFinished) ->
     @graphics.loadAssets =>
       @map = new Map(@graphics.waterImage)
@@ -153,6 +155,7 @@ class window.Game
 
   animate: =>
     deltaTime = FRAME_LENGTH
+    @totalTime += deltaTime
 
     if @ships.length == 0 and not @gameover
       window.setTimeout(@gameoverCallback, 2000)
@@ -203,6 +206,7 @@ class window.Game
   # mayBeDestination and mayBePickup on the ports.
   animateShips: (deltaTime) ->
     for port in @ports
+      port.animate(@totalTime)
       port.mayBeDestination = true
       if port.pickup
         port.mayBePickup = false
