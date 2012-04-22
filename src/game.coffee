@@ -29,7 +29,7 @@ class window.Game
     @addPort('Stockholm', toRadians(59.329444), toRadians(18.068611))
     @addPort('Atlantic', 0, 0)
     @addPort('New York', toRadians(40.664167), toRadians(-73.938611))
-
+    @addPort('Shanghai', toRadians(31.22222), toRadians(121.45806))
     $(@eventsElement)
       .mousedown(@onMouseDown)
       .mouseup(@onMouseUp)
