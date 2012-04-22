@@ -130,8 +130,9 @@ class window.Game
     deltaTime = FRAME_LENGTH
 
     if @ships.length == 0 and not @gameover
+      @announce 'You have lost your fleet!'
       @gameover = true
-      @gameoverCallback()
+      window.setTimeout(@gameoverCallback, 2000)
 
     if @selectedShip
       if @keys.up
@@ -145,7 +146,7 @@ class window.Game
 
     @animateShips(deltaTime)
 
-    if (@timeToNextPickup -= deltaTime) <= 0
+    if (@timeToNextPickup -= deltaTime) <= 0 and not @gameover
       @timeToNextPickup = PICKUP_DELAY
       @createNewPickup()  # must be called after animateShips
 
