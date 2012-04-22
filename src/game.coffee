@@ -21,7 +21,9 @@ class window.Game
     @keys = {}
 
   init: (onFinished) ->
-    @graphics.loadAssets(onFinished)
+    @graphics.loadAssets =>
+      @map = new Map(@graphics.waterImage)
+      onFinished()
 
   start: ->
     @graphics.createScene()

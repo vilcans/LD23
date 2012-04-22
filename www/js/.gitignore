@@ -11,4 +11,5 @@ cargo.js
 math-globals.js
 audio.js
 ship-names.js
+map.js
 *-spec.js

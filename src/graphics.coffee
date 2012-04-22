@@ -20,6 +20,10 @@ class window.Graphics
       callbacks.add ->
     )
 
+    @waterImage = document.createElement 'img'
+    @waterImage.src = 'assets/water.png'
+    @waterImage.onload = callbacks.add ->
+
     @material = new THREE.ShaderMaterial(
       vertexShader: """
         varying vec2 vUv;
