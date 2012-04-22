@@ -13,4 +13,5 @@ $(document).ready ->
     game.init ->
       console.log 'Game initialized!'
       $('.loading').hide()
+      $('#hud').fadeIn 'slow'
       game.start()

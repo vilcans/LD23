@@ -87,12 +87,14 @@ body {
 }
 
 #game {
+  position: relative;
   width: 800px;
   height: 400px;
   border: 1px solid red;
   margin-left: auto;
   margin-right: auto;
   padding: 0;
+  font-size: 14px;
 }
 
 #info {
@@ -101,8 +103,31 @@ body {
   right: 0;
 }
 
+#hud {
+  position: absolute;
+  top: 0;
+}
 
-
+#fleet {
+  padding: 5px;
+}
+#hud h2 {
+}
+#hud ul {
+  margin: 0;
+  padding: 0;
+}
+#hud li {
+  margin: 1px 0;
+  padding: 0;
+  font-size: 12px;
+  display: block;
+  list-style-type: none;
+}
+#hud li a {
+  text-decoration: none;
+  color: white;
+}
 
 
 

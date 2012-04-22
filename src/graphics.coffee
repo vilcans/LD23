@@ -117,7 +117,7 @@ class window.Graphics
 
     @stats.domElement.style.position = 'absolute';
     @stats.domElement.style.top = '0px';
-    @stats.domElement.style.left = '0px';
+    @stats.domElement.style.right = '0px';
     @parentElement.appendChild @stats.domElement
 
   render: ->
