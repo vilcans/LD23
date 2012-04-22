@@ -15,7 +15,7 @@ window.PICKUP_DELAY = 1
 
 window.INITIAL_PICKUP_DELAY = 1
 
-window.CAMERA_ALTITUDE = 2.0
+window.CAMERA_ALTITUDE = 2.4
 
 # Lower values = faster camera
 window.CAMERA_SPEED = .25
