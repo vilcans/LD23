@@ -27,9 +27,14 @@ class window.Game
     @addDummyShips()
 
     @addPort('Stockholm', toRadians(59.329444), toRadians(18.068611))
-    @addPort('Atlantic', 0, 0)
     @addPort('New York', toRadians(40.664167), toRadians(-73.938611))
     @addPort('Shanghai', toRadians(31.22222), toRadians(121.45806))
+    @addPort('Rotterdam', toRadians(51.921667), toRadians(4.481111))
+    @addPort('Goose Bay', toRadians(53.302), toRadians(-60.417))
+    #@addPort('Santo Domingo', toRadians())
+    # http://ports.com/cape-verde/port-of-vale-cavaleiros/
+    @addPort('Cape Verde', 0.2606300172003132, -0.42556363151377735)
+
     $(@eventsElement)
       .mousedown(@onMouseDown)
       .mouseup(@onMouseUp)
