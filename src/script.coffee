@@ -23,6 +23,6 @@ $(document).ready ->
     game.init ->
       console.log 'Game initialized!'
       $('.loading').hide()
-      $('#hud').fadeIn 'slow'
+      $('.ingame').show()
       Tracking.trackEvent 'game', 'start'
       game.start()

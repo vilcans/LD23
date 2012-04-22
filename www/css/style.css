@@ -79,6 +79,11 @@ body {
   color: white;
 }
 
+.loading {
+  position: absolute;
+  width: 100%;
+}
+
 .loading, #gameover a {
   font-size: 60px;
   top: 300px;
