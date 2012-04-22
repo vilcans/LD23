@@ -235,7 +235,7 @@ class window.Game
     $element = $(ship.listElement)
     $element.addClass 'destroyed'
     window.setTimeout(
-      -> $element.slideUp(500, -> $element.remove())
+      -> $element.remove()
       500
     )
     if ship == @selectedShip
@@ -340,5 +340,5 @@ class window.Game
     li.innerHTML = html
     @announcementListElement.appendChild li
     window.setTimeout((->
-      $(li).fadeOut('slow')
+      $(li).remove()
     ), delay)
