@@ -11,7 +11,7 @@ window.RETARDATION_AT_PORT = .1
 window.MAX_SPEED_AT_PORT = .05
 
 # Time between attempts to generate a pickup
-window.PICKUP_DELAY = 1
+window.PICKUP_DELAY = 4
 
 window.INITIAL_PICKUP_DELAY = 1
 
