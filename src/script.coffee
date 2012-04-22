@@ -8,7 +8,11 @@ $(document).ready ->
   else
     Tracking.trackEvent 'webgl', 'available', nonInteraction: true
     element = document.getElementById('game')
-    game = new Game {parentElement: element, eventsElement: document.body}
+    game = new Game {
+      parentElement: element
+      eventsElement: document.body
+      fleetListElement: document.getElementById('fleetList')
+    }
     window.game = game
     game.init ->
       console.log 'Game initialized!'

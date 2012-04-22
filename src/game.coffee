@@ -2,9 +2,11 @@ FPS = 60
 FRAME_LENGTH = 1 / FPS
 
 class window.Game
-  constructor: ({parentElement, eventsElement}) ->
+  constructor: ({parentElement, eventsElement, fleetListElement}) ->
     @parentElement = parentElement
     @eventsElement = eventsElement
+    @fleetListElement = fleetListElement
+
     @graphics = new Graphics(parentElement)
 
     @cameraLongitude = 0  # radians
@@ -66,6 +68,14 @@ class window.Game
     mesh = @graphics.addShip()
     ship = new Ship(mesh, latitude, longitude)
     @ships.push ship
+    li = document.createElement('li')
+    a = document.createElement('a')
+    a.href = '#'
+    a.innerHTML = 'S/S Titanic' # ship.name
+    a.addEventListener 'click', (event) ->
+      console.log 'clicked', ship
+    li.appendChild(a)
+    @fleetListElement.appendChild(li)
     return ship
 
   addPort: (name, latitude, longitude) ->
