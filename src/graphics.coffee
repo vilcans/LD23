@@ -12,6 +12,8 @@ class window.Graphics
       parentElement.clientWidth, parentElement.clientHeight)
     @renderer.setSize @dimensions.x, @dimensions.y
 
+    @cameraMatrices = new CameraMatrices()
+
     @stats = new Stats()
 
   loadAssets: (onFinished) ->
@@ -129,12 +131,21 @@ class window.Graphics
     @stats.update()
 
   setCamera: (latitude, longitude, altitude) ->
-    rotationY = new Matrix4().setRotationY(longitude)
-    rotationX = new Matrix4().setRotationX(-latitude)
-    translation = new Matrix4().setTranslation(0, 0, altitude + 1)
-
-    matrix = new Matrix4().multiply(rotationY, rotationX).multiplySelf(translation)
 
     # Funny, Object3D doesn't have a way to just SET the matrix(?)
     @camera.matrix.identity()
-    @camera.applyMatrix(matrix)
+    @camera.applyMatrix(@cameraMatrices.get(latitude, longitude, altitude))
+
+class CameraMatrices
+  constructor: ->
+    @rotationY = new Matrix4()
+    @rotationX = new Matrix4()
+    @translation = new Matrix4()
+    @matrix = new Matrix4()
+
+  get: (latitude, longitude, altitude) ->
+    @rotationY.setRotationY(longitude)
+    @rotationX.setRotationX(-latitude)
+    @translation.setTranslation(0, 0, altitude + 1)
+    @matrix.multiply(@rotationY, @rotationX).multiplySelf(@translation)
+    return @matrix
