@@ -170,6 +170,15 @@ li {
   color: #f83;
 }
 
+#dropoffs {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 5px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
 #gameover {
   margin: auto;
   text-align: center;

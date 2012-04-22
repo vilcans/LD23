@@ -14,7 +14,7 @@ class window.Graphics
 
     @cameraMatrices = new CameraMatrices()
 
-    @stats = new Stats()
+    #@stats = new Stats()
 
   loadAssets: (onFinished) ->
     callbacks = new Callbacks(onFinished)
@@ -121,14 +121,14 @@ class window.Graphics
   start: ->
     @parentElement.appendChild @renderer.domElement
 
-    @stats.domElement.style.position = 'absolute';
-    @stats.domElement.style.top = '0px';
-    @stats.domElement.style.right = '0px';
-    @parentElement.appendChild @stats.domElement
+    #@stats.domElement.style.position = 'absolute';
+    #@stats.domElement.style.top = '0px';
+    #@stats.domElement.style.right = '0px';
+    #@parentElement.appendChild @stats.domElement
 
   render: ->
     @renderer.render @scene, @camera
-    @stats.update()
+    #@stats.update()
 
   setCamera: (latitude, longitude, altitude) ->
 

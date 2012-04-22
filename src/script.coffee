@@ -14,6 +14,7 @@ $(document).ready ->
       fleetListElement: document.getElementById('fleetList')
       announcementListElement: document.getElementById('announcementList'),
       fleetHelpElement: document.getElementById('fleetHelp'),
+      dropoffsElement: document.getElementById('dropoffs'),
       gameoverCallback: ->
         Tracking.trackEvent 'game', 'over'
         $('#gameover').show()

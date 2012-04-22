@@ -8,6 +8,7 @@ class window.Game
     fleetListElement,
     announcementListElement,
     fleetHelpElement,
+    dropoffsElement,
     gameoverCallback
   }) ->
     @parentElement = parentElement
@@ -15,6 +16,7 @@ class window.Game
     @fleetListElement = fleetListElement
     @announcementListElement = announcementListElement
     @fleetHelpElement = fleetHelpElement
+    @dropoffsElement = dropoffsElement;
     @gameoverCallback = gameoverCallback;
 
     @graphics = new Graphics(parentElement)
@@ -31,6 +33,8 @@ class window.Game
     @keys = {}
 
     @animating = false
+
+    @dropoffs = 0
 
   init: (onFinished) ->
     @graphics.loadAssets =>
@@ -277,6 +281,8 @@ class window.Game
 
   shipReachedDestination: (ship) ->
     @announce "#{ship.htmlName} unloaded at \u2192 #{ship.cargo.destination.htmlName}"
+    @dropoffs++
+    @dropoffsElement.innerHTML = @dropoffs
     ship.destinationElement.innerHTML = '&nbsp;'
     ship.cargo = null
     ship.speed = 0
