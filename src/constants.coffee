@@ -1,7 +1,7 @@
 window.PORT_RADIUS = .06
 window.PORT_RADIUS_SQUARED = PORT_RADIUS * PORT_RADIUS
 
-window.SHIP_RADIUS = .09
+window.SHIP_RADIUS = .07
 window.SHIP_RADIUS_SQUARED = SHIP_RADIUS * SHIP_RADIUS
 
 # How much to scale the ship model to fit our world
