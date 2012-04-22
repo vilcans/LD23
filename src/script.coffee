@@ -12,11 +12,15 @@ $(document).ready ->
       parentElement: element
       eventsElement: document.body
       fleetListElement: document.getElementById('fleetList')
-      announcementListElement: document.getElementById('announcementList')
+      announcementListElement: document.getElementById('announcementList'),
+      gameoverCallback: ->
+        Tracking.trackEvent 'game', 'over'
+        $('#gameover').show()
     }
     window.game = game
     game.init ->
       console.log 'Game initialized!'
       $('.loading').hide()
       $('#hud').fadeIn 'slow'
+      Tracking.trackEvent 'game', 'start'
       game.start()

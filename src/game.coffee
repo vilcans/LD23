@@ -6,12 +6,14 @@ class window.Game
     parentElement,
     eventsElement,
     fleetListElement,
-    announcementListElement
+    announcementListElement,
+    gameoverCallback
   }) ->
     @parentElement = parentElement
     @eventsElement = eventsElement
     @fleetListElement = fleetListElement
     @announcementListElement = announcementListElement
+    @gameoverCallback = gameoverCallback;
 
     @graphics = new Graphics(parentElement)
 
@@ -126,6 +128,10 @@ class window.Game
 
   animate: =>
     deltaTime = FRAME_LENGTH
+
+    if @ships.length == 0 and not @gameover
+      @gameover = true
+      @gameoverCallback()
 
     if @selectedShip
       if @keys.up

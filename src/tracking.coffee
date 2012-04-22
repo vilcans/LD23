@@ -23,5 +23,5 @@ window.Tracking =
   #
   # See
   # http://code.google.com/intl/en_US/apis/analytics/docs/tracking/eventTrackerGuide.html
-  trackEvent: (category, action, {label, value, nonInteraction}) ->
+  trackEvent: (category, action, {label, value, nonInteraction}={}) ->
     _gaq.push ['_trackEvent', category, action, label, value, nonInteraction]
