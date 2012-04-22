@@ -170,6 +170,7 @@ class window.Game
       ship.animate(deltaTime)
       if not @map.isWater(ship.latitude, ship.longitude)
         console.log "#{ship.name} ran aground!"
+        Audio.play 'explosion'
         @destroyShip(ship)
         continue
       if ship.cargo
@@ -201,6 +202,7 @@ class window.Game
           continue
         if s1.collidesWith(s2)
           console.log "#{s1.name} and #{s2.name} collided!"
+          Audio.play 'explosion'
           @destroyShip s1
           @destroyShip s2
 
