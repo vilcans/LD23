@@ -156,22 +156,26 @@ class window.Game
       port.mayBeDestination = true
       if port.pickup
         port.mayBePickup = false
-        port.reasons = ['already has pickup']
+        #port.reasons = ['already has pickup']
       else
         port.mayBePickup = true
-        port.reasons = []
+        #port.reasons = []
     for port in @ports
       if port.pickup
         port.pickup.destination.mayBeDestination = false
         port.pickup.destination.mayBePickup = false
-        port.pickup.destination.reasons.push 'is pickup destination'
+        #port.pickup.destination.reasons.push 'is pickup destination'
 
     for ship in @ships
       ship.animate(deltaTime)
+      if not @map.isWater(ship.latitude, ship.longitude)
+        console.log "#{ship.name} ran aground!"
+        @destroyShip(ship)
+        continue
       if ship.cargo
         ship.cargo.destination.mayBePickup = false
         ship.cargo.destination.mayBeDestination = false
-        ship.cargo.destination.reasons.push 'is loaded cargo destination'
+        #ship.cargo.destination.reasons.push 'is loaded cargo destination'
       ship.updateMesh()
       for port in @ports
         d2 = distanceSquared(
@@ -179,7 +183,7 @@ class window.Game
           port.latitude, port.longitude)
         if d2 <= PORT_RADIUS_SQUARED
           port.mayBePickup = false
-          port.reasons.push 'has a ship'
+          #port.reasons.push 'has a ship'
           shipAtDestination = (ship.cargo and ship.cargo.destination == port)
           shipCanPickUp = (not ship.cargo and port.pickup)
           if shipAtDestination or shipCanPickUp
