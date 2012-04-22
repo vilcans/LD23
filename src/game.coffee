@@ -45,17 +45,31 @@ class window.Game
     @graphics.createScene()
     @graphics.start()
 
-    @addShip(0.2606300172003132, -0.42556363151377735).bearing = Math.PI * .6
+    s1 = @addShip(0.2606300172003132, -0.42556363151377735)
+    s1.bearing = Math.PI * .6
+    s1.maxSpeed /= 2
+    s2 = @addShip(toRadians(40.664167 - 1), toRadians(-73.938611 + 2))
+    s2.bearing = Math.PI * .2
+    s2.maxSpeed /= 3
+    s3 = @addShip(0.371910271053,-2.75458528451)
+    s3.bearing = Math.PI * .2
+    s3.maxSpeed /= 3
 
     #@addDummyShips()
 
     @addPort('New York', toRadians(40.664167 - 1), toRadians(-73.938611 + 2))
     @addPort('Shanghai', toRadians(31.22222), toRadians(121.45806))
-    @addPort('Rotterdam', toRadians(51.921667), toRadians(4.481111))
+    @addPort('Rotterdam', toRadians(51.921667 + 1), toRadians(4.481111))
     @addPort('Goose Bay', toRadians(53.302 + 2), toRadians(-60.417 + 2))
     @addPort('Santo Domingo', toRadians(18.5 - 1), toRadians(-69.983333))
     # http://ports.com/cape-verde/port-of-vale-cavaleiros/
     @addPort('Cape Verde', 0.2606300172003132, -0.42556363151377735)
+    #@addPort('Bergen', toRadians(60.41), toRadians(5.01))
+    @addPort 'Hellesøya', toRadians(63.98), toRadians(9.85) #Hellesøya
+    @addPort 'Rio de Janeiro', -0.401425727959,-0.768235759086
+    @addPort 'Casablanca', 0.586295801985,-0.130824353854
+
+    @addPort 'Honolulu', 0.371910271053,-2.75458528451
 
     $(@graphics.renderer.domElement)
       .mousedown(@onMouseDown)
