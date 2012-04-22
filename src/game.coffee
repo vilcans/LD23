@@ -39,9 +39,9 @@ class window.Game
     @graphics.createScene()
     @graphics.start()
 
-    @addShip(0, 0)
+    @addShip(0.2606300172003132, -0.42556363151377735)
 
-    @addDummyShips()
+    #@addDummyShips()
 
     @addPort('Stockholm', toRadians(59.329444), toRadians(18.068611))
     @addPort('New York', toRadians(40.664167), toRadians(-73.938611))
