@@ -54,7 +54,7 @@ class window.Graphics
     loader.load(
       'assets/ship.js',
       callbacks.add (geometry) =>
-        scale = .05
+        scale = .025
         geometry.applyMatrix(new Matrix4().setScale(scale, scale, scale))
         # Move to planet's surface
         geometry.applyMatrix(new Matrix4().setTranslation(0, 0, 1))

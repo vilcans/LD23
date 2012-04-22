@@ -24,7 +24,7 @@ class window.Game
 
     @selectedShip = @addShip(0, 0)
 
-    #@addDummyShips()
+    @addDummyShips()
 
     @addPort('Stockholm', toRadians(59.329444), toRadians(18.068611))
     @addPort('Atlantic', 0, 0)
@@ -99,17 +99,10 @@ class window.Game
     @graphics.render()
 
   addDummyShips: ->
-    @addShip(toRadians(59.329444), toRadians(18.068611))
-    @addShip(toRadians(50.329444), toRadians(18.068611))
-    @addShip(toRadians(40.329444), toRadians(18.068611))
-    @addShip(toRadians(40.329444), toRadians(8.068611))
-    @addShip(toRadians(30.329444), toRadians(8.068611))
-
-    @addShip(toRadians(40.329444), toRadians(0))
-    @addShip(toRadians(30.329444), toRadians(0))
-
     for lat in [-8..8]
-      @addShip(toRadians(lat * 10), 0)
+      ship = @addShip toRadians(lat * 10), THREE.Math.randFloatSpread(Math.PI / 2)
+      ship.bearing = THREE.Math.randFloatSpread(Math.PI)
+      ship.speed = .1
 
   # Animates all ships and also sets the
   # mayBeDestination and mayBePickup on the ports.

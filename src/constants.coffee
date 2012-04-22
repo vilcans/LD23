@@ -7,6 +7,6 @@ window.MAX_SPEED_AT_PORT = .05
 # Time between attempts to generate a pickup
 window.PICKUP_DELAY = 1
 
-window.INITIAL_PICKUP_DELAY = 3
+window.INITIAL_PICKUP_DELAY = 1
 
-window.CAMERA_ALTITUDE = 1.0
+window.CAMERA_ALTITUDE = 2.0
