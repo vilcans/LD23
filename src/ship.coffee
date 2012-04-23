@@ -62,6 +62,9 @@ class window.Ship
     delta = direction * @turnSpeed * deltaTime * Math.abs(@speed / @maxSpeed)
     @bearing = wrapAngle(@bearing + delta)
 
+nextNameIndex = 0
 Ship.createName = ->
-  i = Math.floor(Math.random() * shipNames.length)
-  return "M/S #{shipNames[i]}"
+  #i = Math.floor(Math.random() * shipNames.length)
+  name = "M/S #{shipNames[nextNameIndex]}"
+  nextNameIndex = (nextNameIndex + 31) % shipNames.length
+  return name
