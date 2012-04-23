@@ -21,7 +21,7 @@ class window.Game
 
     @graphics = new Graphics(parentElement)
 
-    @cameraLongitude = 0  # radians
+    @cameraLongitude = -0.6181649663459371  # radians
     @cameraLatitude = 0  # radians
     @cameraRotationSpeed = 0  # radians per second
 
@@ -52,8 +52,8 @@ class window.Game
     s1.maxSpeed /= 2
     s2 = @addShip(toRadians(40.664167 - 1), toRadians(-73.938611 + 2))
     s2.bearing = Math.PI * .2
-    s2.maxSpeed /= 3
-    s3 = @addShip(0.371910271053,-2.75458528451)
+    s2.maxSpeed /= 8
+    s3 = @addShip(0.371910271053,-2.75458528451)  # Honolulu
     s3.bearing = Math.PI * .2
     s3.maxSpeed /= 3
 
@@ -70,8 +70,15 @@ class window.Game
     @addPort 'Hellesøya', toRadians(63.98), toRadians(9.85) #Hellesøya
     @addPort 'Rio de Janeiro', -0.401425727959,-0.768235759086
     @addPort 'Casablanca', 0.586295801985,-0.130824353854
+    @addPort 'Cape Town', -0.592107796876,0.321557522133
 
     @addPort 'Honolulu', 0.371910271053,-2.75458528451
+
+    @addPort 'Los Angeles', 0.594284610304,-2.06385184048
+    @addPort 'Wellington', -0.720530092865,3.05054464428
+    @addPort 'Sydney', -0.590967999912,2.63913175449
+    @addPort 'Anchorage', 1.06845663111 - .025,-2.61611764905
+    @addPort 'Cod Bay', 0.149631246171,1.41713283676
 
     $(@graphics.renderer.domElement)
       .mousedown(@onMouseDown)

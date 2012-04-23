@@ -13,8 +13,8 @@ class window.Ship
     @maxSpeed = .4
     @minSpeed = -.2
     # equatorial radians per second squared
-    @acceleration = 1
-    @deceleration = 1
+    @acceleration = .3
+    @deceleration = .3
 
     @turnSpeed = Math.PI  # radians per second
 
