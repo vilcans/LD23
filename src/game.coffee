@@ -40,7 +40,7 @@ class window.Game
 
     @totalTime = 0
 
-    @money = 250
+    @money = 100
 
   init: (onFinished) ->
     @graphics.loadAssets =>
@@ -54,12 +54,15 @@ class window.Game
     s1 = @addShip(0.2606300172003132, -0.42556363151377735)
     s1.bearing = Math.PI * .6
     s1.maxSpeed /= 2
+    s1.minSpeed /= 2
     s2 = @addShip(toRadians(40.664167 - 1), toRadians(-73.938611 + 2))
     s2.bearing = Math.PI * .2
     s2.maxSpeed /= 8
+    s2.minSpeed /= 8
     s3 = @addShip(0.371910271053,-2.75458528451)  # Honolulu
     s3.bearing = Math.PI * .2
     s3.maxSpeed /= 3
+    s3.minSpeed /= 3
 
     #@addDummyShips()
 
