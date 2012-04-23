@@ -9,6 +9,7 @@ class window.Game
     announcementListElement,
     fleetHelpElement,
     dropoffsElement,
+    moneyElement,
     gameoverCallback
   }) ->
     @parentElement = parentElement
@@ -17,6 +18,7 @@ class window.Game
     @announcementListElement = announcementListElement
     @fleetHelpElement = fleetHelpElement
     @dropoffsElement = dropoffsElement;
+    @moneyElement = moneyElement;
     @gameoverCallback = gameoverCallback;
 
     @graphics = new Graphics(parentElement)
@@ -37,6 +39,8 @@ class window.Game
     @dropoffs = 0
 
     @totalTime = 0
+
+    @money = 100
 
   init: (onFinished) ->
     @graphics.loadAssets =>
@@ -160,15 +164,28 @@ class window.Game
       requestAnimationFrame @animationFrame
     @animate()
 
+  endGame: ->
+    window.setTimeout(@gameoverCallback, 2000)
+    @gameover = true
+    Audio.play 'gameover'
+
   animate: =>
     deltaTime = FRAME_LENGTH
     @totalTime += deltaTime
 
+    @money -= deltaTime
+    @moneyElement.innerHTML = '' + Math.ceil(@money)
+    if @money <= 0
+      @money = 0
+      if not @gameover
+        @announce 'Out of funding!'
+        @endGame()
+        for s in @ships
+          @destroyShip s
+
     if @ships.length == 0 and not @gameover
-      window.setTimeout(@gameoverCallback, 2000)
       @announce 'You have lost your fleet!'
-      @gameover = true
-      Audio.play 'gameover'
+      @endGame()
 
     if @selectedShip
       if @keys.up
@@ -308,6 +325,7 @@ class window.Game
   shipReachedDestination: (ship) ->
     @announce "#{ship.htmlName} unloaded at \u2192 #{ship.cargo.destination.htmlName}"
     @dropoffs++
+    @money += 20
     @dropoffsElement.innerHTML = @dropoffs
     ship.destinationElement.innerHTML = '&nbsp;'
     ship.cargo = null
