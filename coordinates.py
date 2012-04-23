@@ -7,8 +7,8 @@ import math
 
 format = re.compile(
     r'\s*'
-    r'(\d+)°(\d+)′([\d.]+)″([NS])\s*'
-    r'(\d+)°(\d+)′([\d.]+)″([EW])\s*'
+    r'(\d+)°\s*(\d+)′\s*([\d.]+)″\s*([NS]),?\s*'
+    r'(\d+)°\s*(\d+)′\s*([\d.]+)″\s*([EW])\s*'
 )
 
 def to_degrees(string):
