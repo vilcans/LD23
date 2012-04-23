@@ -40,7 +40,7 @@ class window.Game
 
     @totalTime = 0
 
-    @money = 100
+    @money = 250
 
   init: (onFinished) ->
     @graphics.loadAssets =>
