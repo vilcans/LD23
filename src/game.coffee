@@ -22,6 +22,7 @@ class window.Game
     @gameoverCallback = gameoverCallback;
 
     @graphics = new Graphics(parentElement)
+    @keyboard = new Keyboard
 
     @cameraLongitude = -0.6181649663459371  # radians
     @cameraLatitude = 0  # radians
@@ -98,7 +99,7 @@ class window.Game
     else
       @startAnimation()
 
-    $(document).keydown(@onKeyDown).keyup(@onKeyUp)
+    $(document).keydown(@keyboard.onKeyDown).keyup(@keyboard.onKeyUp)
 
   startAnimation: ->
     if @animating
@@ -191,13 +192,21 @@ class window.Game
       @endGame()
 
     if @selectedShip
-      if @keys.up
-        @selectedShip.accelerate deltaTime
-      else if @keys.down
-        @selectedShip.decelerate deltaTime
-      if @keys.left
+      oldSpeed = @selectedShip.speed
+      if @keyboard.pressed.up
+        newSpeed = @selectedShip.accelerate(deltaTime)
+        if oldSpeed < 0 and newSpeed >= 0
+          @selectedShip.speed = 0
+          @keyboard.drop 'up'
+      else if @keyboard.pressed.down
+        newSpeed = @selectedShip.decelerate(deltaTime)
+        if oldSpeed > 0 and newSpeed <= 0
+          @selectedShip.speed = 0
+          @keyboard.drop 'down'
+
+      if @keyboard.pressed.left
         @selectedShip.turn 1, deltaTime
-      if @keys.right
+      if @keyboard.pressed.right
         @selectedShip.turn -1, deltaTime
 
     @animateShips(deltaTime)
@@ -341,27 +350,6 @@ class window.Game
     @announce "#{ship.htmlName} picked up cargo for \u2192 #{ship.cargo.destination.htmlName}"
     ship.destinationElement.innerHTML = '\u2192 ' + ship.cargo.destination.name
     Audio.play 'pickup'
-
-  onKeyDown: (event) =>
-    @setKeys event, true
-    event.preventDefault()
-
-  onKeyUp: (event) =>
-    @setKeys event, false
-    event.preventDefault()
-
-  setKeys: (event, value) ->
-    if event.ctrlKey or event.altKey
-      return
-    code = event.keyCode
-    if code == 65 or code == 97
-      @keys.left = value
-    else if code == 68 or code == 100
-      @keys.right = value
-    else if code == 87 or code == 119
-      @keys.up = value
-    else if code == 83 or code == 115
-      @keys.down = value
 
   onMouseDown: (event) =>
     @dragging = true

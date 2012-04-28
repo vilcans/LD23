@@ -49,14 +49,10 @@ class window.Ship
     return d2 <= SHIP_RADIUS_SQUARED
 
   accelerate: (deltaTime) ->
-    @speed += @acceleration * deltaTime
-    if @speed > @maxSpeed
-      @speed = @maxSpeed
+    @speed = Math.min(@speed + @acceleration * deltaTime, @maxSpeed)
 
   decelerate: (deltaTime) ->
-    @speed -= @deceleration * deltaTime
-    if @speed < @minSpeed
-      @speed = @minSpeed
+    @speed = Math.max(@speed - @deceleration * deltaTime, @minSpeed)
 
   turn: (direction, deltaTime) ->
     delta = direction * @turnSpeed * deltaTime * Math.abs(@speed / @maxSpeed)
