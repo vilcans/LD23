@@ -12,4 +12,5 @@ math-globals.js
 audio.js
 ship-names.js
 map.js
+keyboard.js
 *-spec.js
