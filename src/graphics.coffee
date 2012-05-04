@@ -5,7 +5,7 @@ Matrix4 = THREE.Matrix4
 ORIGIN = new Vector3(0, 0, 0)
 
 class window.Graphics
-  constructor: (parentElement) ->
+  constructor: (parentElement, enableStats) ->
     @parentElement = parentElement
     @renderer = new THREE.WebGLRenderer()
     @dimensions = new THREE.Vector2(
@@ -14,7 +14,8 @@ class window.Graphics
 
     @cameraMatrices = new CameraMatrices()
 
-    #@stats = new Stats()
+    if enableStats
+      @stats = new Stats()
 
   loadAssets: (onFinished) ->
     callbacks = new Callbacks(onFinished)
@@ -121,14 +122,16 @@ class window.Graphics
   start: ->
     @parentElement.appendChild @renderer.domElement
 
-    #@stats.domElement.style.position = 'absolute';
-    #@stats.domElement.style.top = '0px';
-    #@stats.domElement.style.right = '0px';
-    #@parentElement.appendChild @stats.domElement
+    if @stats
+      @stats.domElement.style.position = 'absolute';
+      @stats.domElement.style.top = '0px';
+      @stats.domElement.style.right = '0px';
+      @parentElement.appendChild @stats.domElement
 
   render: ->
     @renderer.render @scene, @camera
-    #@stats.update()
+    if @stats
+      @stats.update()
 
   setCamera: (latitude, longitude, altitude) ->
 

@@ -21,7 +21,7 @@ class window.Game
     @moneyElement = moneyElement;
     @gameoverCallback = gameoverCallback;
 
-    @graphics = new Graphics(parentElement)
+    @graphics = new Graphics(parentElement, document.location.hash == '#stats')
     @keyboard = new Keyboard
 
     @cameraLongitude = -0.6181649663459371  # radians
