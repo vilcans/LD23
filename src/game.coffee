@@ -42,6 +42,7 @@ class window.Game
     @totalTime = 0
 
     @money = 100
+    @premium = 1  # dollars per second
 
   init: (onFinished) ->
     @graphics.loadAssets =>
@@ -177,15 +178,15 @@ class window.Game
     deltaTime = FRAME_LENGTH
     @totalTime += deltaTime
 
-    @money -= deltaTime
-    @moneyElement.innerHTML = '' + Math.ceil(@money)
-    if @money <= 0
-      @money = 0
-      if not @gameover
+    if not @gameover
+      @money -= deltaTime * @premium
+      if @money <= 0
+        @money = 0
         @announce 'Out of funding!'
         @endGame()
         for s in @ships
           @destroyShip s
+      @moneyElement.innerHTML = '' + Math.ceil(@money)
 
     if @ships.length == 0 and not @gameover
       @announce 'You have lost your fleet!'
@@ -262,6 +263,7 @@ class window.Game
         Audio.play 'explosion'
         @announce "#{ship.htmlName} ran aground!"
         @destroyShip(ship)
+        @increasePremium 1
         continue
       if ship.cargo
         ship.cargo.destination.mayBePickup = false
@@ -295,6 +297,7 @@ class window.Game
           Audio.play 'explosion'
           @destroyShip s1
           @destroyShip s2
+          @increasePremium 2
 
   destroyShip: (ship) ->
     ship.alive = false
@@ -311,6 +314,19 @@ class window.Game
         newArray.push @ships[i]
     @ships = newArray
     @graphics.destroyShip ship.mesh
+
+  increasePremium: (factor) ->
+    @premium += factor
+    if @premiumAnnounceTimer
+      window.clearTimeout @premiumAnnounceTimer
+    @premiumAnnounceTimer = window.setTimeout(
+      =>
+        @premiumAnnounceTimer = null
+        if not @gameover
+          perMinute = @premium * 60
+          @announce "Insurance premium raised to $#{perMinute}/minute"
+      2000
+    )
 
   deselectShip: ->
     if @selectedShip
