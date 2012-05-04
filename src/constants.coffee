@@ -21,3 +21,6 @@ window.CAMERA_ALTITUDE = 2.4
 window.CAMERA_SPEED = .25
 
 window.PORT_PULSATE_SPEED = 5
+
+window.INITIAL_PREMIUM = 1
+window.PREMIUM_INCREASE = 1

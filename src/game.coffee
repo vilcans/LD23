@@ -42,7 +42,10 @@ class window.Game
     @totalTime = 0
 
     @money = 100
-    @premium = 1  # dollars per second
+    @premium = 0  # dollars per second
+
+    @gameStarted = false
+    @gameover = false
 
   init: (onFinished) ->
     @graphics.loadAssets =>
@@ -132,11 +135,13 @@ class window.Game
     li.appendChild(nameElement)
     li.appendChild(destinationElement)
     li.addEventListener 'click', (event) =>
-      if @fleetHelpElement
+      if not @gameStarted
+        @gameStarted = true
         @fleetHelpElement.parentNode.removeChild(@fleetHelpElement)
         @fleetHelpElement = null
         @announce 'Control ship with <strong>W A S D</strong>', 10000
         @timeToNextPickup = INITIAL_PICKUP_DELAY
+        @premium = INITIAL_PREMIUM
       if ship.alive
         Audio.play 'select'
         @selectShip ship
@@ -315,8 +320,9 @@ class window.Game
     @ships = newArray
     @graphics.destroyShip ship.mesh
 
+  # factor is the number of ship destoyred
   increasePremium: (factor) ->
-    @premium += factor
+    @premium += factor * PREMIUM_INCREASE
     if @premiumAnnounceTimer
       window.clearTimeout @premiumAnnounceTimer
     @premiumAnnounceTimer = window.setTimeout(
